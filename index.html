@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Діагностика обличчя | Svitlana Tape</title>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID_HERE'); // <-- ЗАМІНИ YOUR_PIXEL_ID_HERE на свій ID
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+    <!-- End Meta Pixel Code -->
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Бібліотека для телефонів -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #0b0d12;
+            color: #ffffff;
+        }
+        
+        /* Анімації */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Background */
+        .hero-section {
+            background-image: url('fonfoto.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        
+        .hero-overlay {
+            background: linear-gradient(
+                to bottom, 
+                rgba(11, 13, 18, 0.3) 0%,
+                rgba(11, 13, 18, 0.7) 60%,
+                #0b0d12 100%
+            );
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Картки */
+        .custom-card {
+            background: linear-gradient(145deg, #13161c 0%, #0f1116 100%);
+            border: 1px solid #2d323e;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .custom-card:hover {
+            border-color: #E13030;
+            transform: translateY(-5px);
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 4px solid #E13030;
+        }
+
+        .price-badge {
+            background: rgba(225, 48, 48, 0.9);
+            border: 1px solid #E13030;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(225, 48, 48, 0.4);
+        }
+
+        .price-glow { text-shadow: 0 0 20px rgba(225, 48, 48, 0.8); }
+
+        /* Таймер */
+        .timer-box {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px dashed #E13030;
+            backdrop-filter: blur(5px);
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { border-color: #E13030; }
+            50% { border-color: #ff6b6b; box-shadow: 0 0 15px rgba(225, 48, 48, 0.3); }
+            100% { border-color: #E13030; }
+        }
+
+        /* Інпути */
+        .custom-input {
+            background-color: #1a1d26;
+            border: 1px solid #2d323e;
+            color: white;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        .custom-input:focus {
+            border-color: #E13030;
+            box-shadow: 0 0 0 4px rgba(225, 48, 48, 0.1);
+            outline: none;
+        }
+
+        /* ВАЛІДАЦІЯ ПОМИЛОК */
+        .input-error {
+            border-color: #ff3b3b !important;
+            box-shadow: 0 0 0 4px rgba(255, 59, 59, 0.2) !important;
+            animation: shake 0.4s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+        .error-message-text {
+            color: #ff3b3b;
+            font-size: 0.75rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        /* INFINITE SLIDER STYLES */
+        .infinite-slider-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+        
+        .infinite-slider-track {
+            display: flex;
+            gap: 1rem;
+            transition: transform 0.4s ease;
+        }
+        
+        .infinite-slider-track.no-transition {
+            transition: none;
+        }
+        
+        .slider-item {
+            flex: 0 0 85%;
+            min-width: 85%;
+        }
+        
+        @media (min-width: 768px) {
+            .slider-item {
+                flex: 0 0 40%;
+                min-width: 40%;
+            }
+        }
+        
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            background: rgba(225, 48, 48, 0.9);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(225, 48, 48, 0.4);
+        }
+        
+        .slider-nav:hover {
+            background: #b91c1c;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .slider-nav.prev {
+            left: 10px;
+        }
+        
+        .slider-nav.next {
+            right: 10px;
+        }
+        
+        @media (max-width: 767px) {
+            .slider-nav {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        /* Кнопки */
+        .cta-btn {
+            background-color: #E13030;
+            color: white;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(225, 48, 48, 0.3);
+            width: 100%;
+        }
+        .cta-btn:hover {
+            background-color: #b91c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(225, 48, 48, 0.5);
+        }
+        .cta-btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .mobile-fixed-btn {
+            position: fixed;
+            bottom: 20px; left: 50%; transform: translateX(-50%); width: 94%; z-index: 40;
+            background-color: #E13030; box-shadow: 0 5px 20px rgba(225, 48, 48, 0.5);
+        }
+
+        /* MODAL STYLES */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: linear-gradient(145deg, #13161c 0%, #0b0d12 100%);
+            border: 1px solid #E13030;
+            box-shadow: 0 0 50px rgba(225, 48, 48, 0.2);
+        }
+
+        /* Intl Tel Input Dark Theme */
+        .iti { width: 100%; }
+        .iti__country-list { background-color: #1a1d26; border: 1px solid #2d323e; color: white; }
+        .iti__tel-input {
+            background-color: #1a1d26 !important;
+            border: 1px solid #2d323e !important;
+            color: white !important;
+            border-radius: 0.75rem !important;
+            padding-top: 1rem !important; padding-bottom: 1rem !important;
+        }
+        .iti__tel-input:focus {
+            border-color: #E13030 !important;
+            box-shadow: 0 0 0 4px rgba(225, 48, 48, 0.1);
+            outline: none !important;
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { DEFAULT: '#E13030', hover: '#b91c1c' },
+                        dark: { bg: '#0b0d12', card: '#13161c', border: '#2d323e' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col items-center overflow-x-hidden relative">
+
+    <!-- ========================================== -->
+    <!-- HERO SECTION -->
+    <!-- ========================================== -->
+    <header class="w-full hero-section flex flex-col items-center justify-center min-h-[100dvh] md:min-h-[850px]">
+        <div class="hero-overlay"></div>
+        
+        <!-- ПРАВКА: mt-4 для мобільних для підняття тексту -->
+        <div class="hero-content w-full max-w-4xl px-4 py-8 md:py-12 flex flex-col items-center text-center mt-4 md:mt-0">
+            
+            <div class="fade-in-up mb-4 md:mb-6">
+                <span class="price-badge px-6 py-2 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest animate-pulse">
+                    Персональна діагностика
+                </span>
+            </div>
+
+            <h1 class="text-2xl md:text-5xl lg:text-6xl font-extrabold mb-2 md:mb-4 leading-tight fade-in-up uppercase text-white drop-shadow-xl">
+                Отримай рішення як виглядати <br>на 10 років <span class="text-brand">молодше</span> і прибрати зморшки
+            </h1>
+            
+            <h2 class="text-lg md:text-2xl lg:text-3xl font-extrabold mb-4 md:mb-6 leading-tight fade-in-up uppercase text-white drop-shadow-xl">
+                — без уколів, ботоксу та дорогих косметологів
+            </h2>
+
+            <p class="text-gray-100 text-sm md:text-xl max-w-2xl mb-6 md:mb-8 fade-in-up font-medium drop-shadow-lg leading-tight" style="animation-delay: 0.1s;">
+                Отримай персональну діагностику, на якій я детально розберу твоє обличчя. Ти отримаєш чіткий покроковий план та всі рекомендації.
+            </p>
+
+            <!-- ПРАВКА 4: Компактна вертикальна плашка ціни -->
+            <div class="flex flex-col items-center gap-3 mb-6 md:mb-10 fade-in-up" style="animation-delay: 0.2s;">
+                <div class="flex flex-col items-center bg-black/60 px-8 py-3 rounded-2xl backdrop-blur-md border border-white/10 shadow-xl min-w-[200px]">
+                    <span class="text-5xl md:text-7xl font-extrabold text-white price-glow leading-none">590 грн</span>
+                    <span class="text-gray-400 text-sm md:text-xl line-through decoration-red-500/80 decoration-2 mt-2">1790 грн</span>
+                </div>
+                
+                <!-- ПРАВКА: Текст таймера та час 10:00 -->
+                <div class="timer-box px-6 py-2 rounded-xl flex items-center gap-3 mt-1 shadow-lg">
+                    <span class="text-gray-200 text-[10px] md:text-xs font-bold uppercase tracking-widest">До збільшення ціни:</span>
+                    <span id="countdown" class="text-xl md:text-2xl font-mono font-bold text-brand w-[80px] text-center">10:00</span>
+                </div>
+            </div>
+
+            <!-- ПРАВКА: Новий текст кнопки -->
+            <button onclick="openModal()" class="flex cta-btn text-lg font-bold py-4 md:py-5 px-12 md:px-16 rounded-full uppercase tracking-wide items-center justify-center gap-3 fade-in-up max-w-sm" style="animation-delay: 0.3s;">
+                Хочу розбір обличчя <i class="fa-solid fa-angle-right"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- ДОКАЗИ (Слайдер) - БЕЗКІНЕЧНИЙ -->
+    <!-- ========================================== -->
+    <section class="w-full max-w-6xl px-4 py-12 relative z-10 -mt-10 md:-mt-20">
+        <h2 class="text-lg md:text-xl font-bold text-white mb-6 text-center uppercase tracking-widest bg-dark-bg/80 backdrop-blur inline-block px-6 py-2 rounded-full border border-dark-border mx-auto block w-fit">
+            Ось як змінюються обличчя після діагностики:
+        </h2>
+        
+        <div class="infinite-slider-container" id="proofs-slider">
+            <button class="slider-nav prev" onclick="slideProofs(-1)">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="infinite-slider-track" id="proofs-track">
+                <!-- Оригінальні слайди -->
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews7.jpg" alt="Результат До Після 7" class="w-full h-auto rounded-xl object-contain">
+                </div>
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews8.jpg" alt="Результат До Після 8" class="w-full h-auto rounded-xl object-contain">
+                </div>
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews9.jpg" alt="Результат До Після 9" class="w-full h-auto rounded-xl object-contain">
+                </div>
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews10.jpg" alt="Результат До Після 10" class="w-full h-auto rounded-xl object-contain">
+                </div>
+                <!-- НОВІ 4 ФОТО - додай файли з такими назвами -->
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews11.jpg" alt="Результат До Після 11" class="w-full h-auto rounded-xl object-contain">
+                </div>
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews12.jpg" alt="Результат До Після 12" class="w-full h-auto rounded-xl object-contain">
+                </div>
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews13.jpg" alt="Результат До Після 13" class="w-full h-auto rounded-xl object-contain">
+                </div>
+                <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
+                    <img src="reviews14.jpg" alt="Результат До Після 14" class="w-full h-auto rounded-xl object-contain">
+                </div>
+            </div>
+            <button class="slider-nav next" onclick="slideProofs(1)">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+        <p class="text-center text-gray-500 text-xs mt-4 uppercase tracking-widest md:hidden">
+            <i class="fa-solid fa-arrows-left-right mr-2"></i> Гортай вправо
+        </p>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ДЛЯ КОГО -->
+    <!-- ========================================== -->
+    <section class="w-full max-w-5xl px-4 py-16 relative z-10">
+        <div class="text-center mb-12">
+            <h2 class="text-2xl md:text-3xl font-bold text-white uppercase mb-4">
+                Чому ти старієш <span class="text-brand">швидше, ніж могла б?</span>
+            </h2>
+            <p class="text-gray-400">90% дівчат роблять одні й ті самі помилки.</p>
+        </div>
+        <div class="space-y-4">
+            <div class="value-card p-6 rounded-r-xl">
+                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-brand"></i> Сліпе копіювання
+                </h3>
+                <p class="text-gray-400 text-sm">Ти робиш вправи з Instagram, не знаючи, що вони можуть поглиблювати зморшки.</p>
+            </div>
+            <div class="value-card p-6 rounded-r-xl">
+                <!-- ПРАВКА 3: "Уколи — пастка" -->
+                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-syringe text-brand"></i> Уколи — пастка
+                </h3>
+                <p class="text-gray-400 text-sm">Замість вирішення причини, уколи часто просто "заморожують" проблему та погіршують лімфовідтік.</p>
+            </div>
+            <div class="value-card p-6 rounded-r-xl">
+                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-hand-holding-dollar text-brand"></i> Боротьба з наслідками
+                </h3>
+                <p class="text-gray-400 text-sm">Без усунення причини (затиснута шия, лімфостаз) креми — це гроші на вітер.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ЩО ВСЕРЕДИНІ -->
+    <!-- ========================================== -->
+    <section class="w-full bg-dark-card border-y border-dark-border py-16 mt-12">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-2xl md:text-4xl font-bold text-white mb-4 text-center uppercase">Косметологи <span class="text-brand">приховують</span> це, бо <span class="text-brand">заробляють</span> на тобі</h2>
+            <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+                Я глибоко аналізую твої фото та анкету і записую детальні голосові та відео-повідомлення.
+            </p>
+            <div class="space-y-6">
+                <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand relative overflow-hidden">
+                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-dna text-brand"></i> Повний "рентген" обличчя</h3>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed pl-8">Я поясню твій тип старіння і покажу приховані причини змін.</p>
+                </div>
+                <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand relative overflow-hidden">
+                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-list-check text-brand"></i> Персональна стратегія</h3>
+                    <p class="text-gray-300 text-sm md:text-base leading-relaxed pl-8">Ти отримаєш чіткий план: які техніки врятують твоє обличчя, а що заборонено.</p>
+                </div>
+            </div>
+            <div class="text-center mt-10">
+                <p class="text-brand font-bold uppercase tracking-widest text-sm animate-pulse mb-4"><i class="fa-solid fa-gift mr-1"></i> Цінність — економія років помилок</p>
+                <button onclick="openModal()" class="cta-btn text-lg font-bold py-4 px-10 rounded-full uppercase tracking-wide inline-flex items-center gap-2">
+                    Хочу такий розбір <i class="fa-solid fa-arrow-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ЕКСПЕРТ (РОЗШИРЕНИЙ БЛОК) -->
+    <!-- ========================================== -->
+    <section class="w-full max-w-5xl mx-auto px-4 py-16">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="w-full md:w-1/2 relative">
+                <div class="relative rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(225,48,48,0.15)] border border-dark-border">
+                    <img src="page1.jpg" alt="Svitlana Expert" class="w-full h-auto object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0b0d12] to-transparent opacity-80"></div>
+                    <div class="absolute bottom-6 left-6">
+                        <p class="text-brand text-sm font-bold uppercase tracking-widest mb-1">Експерт</p>
+                        <h3 class="text-3xl font-bold text-white uppercase">Svitlana Gavryliuk</h3>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="w-full md:w-1/2">
+                <h2 class="text-2xl md:text-4xl font-bold text-white mb-6 uppercase leading-snug">
+                    Я бачу не зморшку, <br><span class="text-brand">а причину</span>
+                </h2>
+                
+                <div class="space-y-4 text-gray-300 text-sm md:text-base leading-relaxed">
+                    <p class="font-medium text-white">
+                        Привіт, я Світлана — спеціаліст з естетичного тейпування та природного омолодження.
+                    </p>
+                    <p>
+                        Я пропрацювала з багатьма обличчями жінок. Мій підхід базується на глибокому знанні анатомії: кісток, м'язів, фасцій та лімфатичної системи. Я не вірю в "погану генетику", я вірю в правильну систему.
+                    </p>
+                    <p>
+                        Багато дівчат приходять до мене зі страхом: "Я боюся щось робити, бо не знаю як", або після невдалих "уколів краси". Моє завдання — не просто дати вправу, а навчити тебе розуміти своє обличчя, як карту.
+                    </p>
+                    <p>
+                        Я не даю шаблонних порад. На діагностиці я розберу саме ТВОЮ ситуацію, щоб ти точно знала, як повернути молодість безпечно та екологічно, без скальпеля та ін'єкцій.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ВІДГУКИ - БЕЗКІНЕЧНИЙ СЛАЙДЕР -->
+    <!-- ========================================== -->
+    <section class="w-full bg-dark-card border-y border-dark-border py-16">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-2xl md:text-4xl font-bold text-white mb-10 text-center uppercase">Що кажуть <span class="text-brand">дівчата</span></h2>
+            
+            <div class="infinite-slider-container" id="reviews-slider">
+                <button class="slider-nav prev" onclick="slideReviews(-1)">
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+                <div class="infinite-slider-track" id="reviews-track">
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews1.jpg" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews2.jpg" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews3.jpg" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews4.jpg" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews5.jpg" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews6.jpg" class="w-full h-auto rounded-xl object-contain"></div>
+                </div>
+                <button class="slider-nav next" onclick="slideReviews(1)">
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+            </div>
+            <p class="text-center text-gray-500 text-xs mt-4 uppercase tracking-widest md:hidden"><i class="fa-solid fa-arrows-left-right mr-2"></i> Гортай вправо</p>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ГАРАНТІЯ -->
+    <!-- ========================================== -->
+    <section class="w-full max-w-3xl px-4 mx-auto mt-16 mb-24">
+        <div class="bg-dark-card border border-brand/40 rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-[0_0_30px_rgba(225,48,48,0.1)]">
+            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fa-solid fa-shield-halved text-8xl text-brand"></i></div>
+            <div class="flex items-start gap-4 relative z-10">
+                <div class="text-brand text-4xl shrink-0"><i class="fa-solid fa-certificate"></i></div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-2 uppercase">100% Гарантія повернення</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Якщо розбір не принесе користі — <strong class="text-white">я поверну вам усі 590 грн</strong>.</p>
+                </div>
+            </div>
+        </div>
+        <div class="mt-8 text-center">
+             <button onclick="openModal()" class="cta-btn text-xl font-bold py-5 px-12 rounded-xl uppercase tracking-wide shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+                Хочу розбір обличчя
+            </button>
+        </div>
+    </section>
+
+    <!-- ПРАВКА: Текст кнопки мобільної плашки -->
+    <button onclick="openModal()" class="md:hidden mobile-fixed-btn text-white text-lg font-bold py-4 rounded-xl uppercase tracking-wide flex justify-center items-center">
+        Хочу розбір лиця
+    </button>
+
+    <!-- ========================================== -->
+    <!-- MODAL FORM (POPUP) -->
+    <!-- ========================================== -->
+    <div id="order-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center px-4 modal-overlay transition-opacity duration-300">
+        <div class="modal-content w-full max-w-md rounded-3xl p-6 relative fade-in-up">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+
+            <h2 class="text-2xl font-bold text-white mb-2 text-center uppercase">Забронювати місце</h2>
+            <p class="text-gray-400 mb-6 text-center text-xs">Введіть дані для зв'язку та отримання розбору.</p>
+
+            <form id="order-form" onsubmit="handleOrderSubmit(event)" class="space-y-4">
+                <!-- ІМ'Я -->
+                <div>
+                    <label class="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Ваше Ім'я</label>
+                    <input type="text" id="user_name" name="name" placeholder="Олена" class="custom-input rounded-xl py-3 pl-4 pr-4 focus:outline-none placeholder-gray-600">
+                    <p id="error-name" class="error-message-text">Ім'я не може містити цифри</p>
+                </div>
+
+                <!-- TELEGRAM -->
+                <div>
+                    <label class="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Ваш Telegram</label>
+                    <input type="text" id="user_telegram" name="telegram" placeholder="@username" class="custom-input rounded-xl py-3 pl-4 pr-4 focus:outline-none placeholder-gray-600">
+                    <p id="error-telegram" class="error-message-text">Введіть нік Telegram</p>
+                </div>
+
+                <!-- ТЕЛЕФОН -->
+                <div>
+                    <label class="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Телефон</label>
+                    <input type="tel" id="phone" name="phone" class="custom-input rounded-xl py-3 focus:outline-none placeholder-gray-600">
+                    <input type="hidden" name="full_phone" id="full_phone">
+                    <input type="hidden" name="country_code" id="country_code">
+                    <p id="error-phone" class="error-message-text">Невірний формат номеру</p>
+                </div>
+
+                <div class="bg-[#0b0d12]/50 rounded-xl p-3 border border-white/5 flex justify-between items-center mt-2">
+                    <span class="text-gray-400 text-sm">До сплати:</span>
+                    <div class="flex items-end gap-2">
+                        <span class="text-gray-600 line-through text-xs decoration-red-500/50">1790 грн</span>
+                        <span class="text-xl font-bold text-white">590 грн</span>
+                    </div>
+                </div>
+
+                <div id="global-error" class="hidden bg-red-900/30 border border-red-500/50 rounded-lg p-2 text-center mb-2">
+                    <p class="text-red-400 text-xs font-bold uppercase">Будь ласка, виправте помилки</p>
+                </div>
+
+                <button type="submit" class="cta-btn text-lg font-bold py-4 rounded-xl uppercase tracking-wide shadow-lg w-full mt-2">
+                    Перейти до оплати
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Скрипти -->
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
+
+    <script>
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHekKMuSo4naCZ12hcFtCiQZht6WCmraWFsunM3OUMaRJAp0qWkZdI7JlYvqMcfVUu/exec'; 
+        const PAYMENT_URL = 'https://secure.wayforpay.com/button/b758794a9116f';
+
+        function openModal() { 
+            document.getElementById('order-modal').classList.remove('hidden'); 
+            document.body.style.overflow = 'hidden';
+            // Meta Pixel: трекаємо відкриття форми
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'InitiateCheckout');
+            }
+        }
+        function closeModal() { document.getElementById('order-modal').classList.add('hidden'); document.body.style.overflow = 'auto'; }
+
+        // ========================================
+        // БЕЗКІНЕЧНИЙ СЛАЙДЕР
+        // ========================================
+        
+        // Слайдер "Докази"
+        let proofsIndex = 0;
+        const proofsTrack = document.getElementById('proofs-track');
+        let proofsSlides;
+        let proofsSlideWidth;
+        let proofsTotalSlides;
+        
+        // Слайдер "Відгуки"
+        let reviewsIndex = 0;
+        const reviewsTrack = document.getElementById('reviews-track');
+        let reviewsSlides;
+        let reviewsSlideWidth;
+        let reviewsTotalSlides;
+        
+        function initSliders() {
+            // Ініціалізація слайдера "Докази"
+            proofsSlides = proofsTrack.querySelectorAll('.slider-item');
+            proofsTotalSlides = proofsSlides.length;
+            
+            // Клонуємо слайди для безкінечності
+            proofsSlides.forEach(slide => {
+                const clone = slide.cloneNode(true);
+                proofsTrack.appendChild(clone);
+            });
+            proofsSlides.forEach(slide => {
+                const clone = slide.cloneNode(true);
+                proofsTrack.insertBefore(clone, proofsTrack.firstChild);
+            });
+            
+            // Ініціалізація слайдера "Відгуки"
+            reviewsSlides = reviewsTrack.querySelectorAll('.slider-item');
+            reviewsTotalSlides = reviewsSlides.length;
+            
+            // Клонуємо слайди для безкінечності
+            reviewsSlides.forEach(slide => {
+                const clone = slide.cloneNode(true);
+                reviewsTrack.appendChild(clone);
+            });
+            reviewsSlides.forEach(slide => {
+                const clone = slide.cloneNode(true);
+                reviewsTrack.insertBefore(clone, reviewsTrack.firstChild);
+            });
+            
+            updateSliderDimensions();
+            window.addEventListener('resize', updateSliderDimensions);
+        }
+        
+        function updateSliderDimensions() {
+            // Докази
+            const proofsFirstSlide = proofsTrack.querySelector('.slider-item');
+            if (proofsFirstSlide) {
+                proofsSlideWidth = proofsFirstSlide.offsetWidth + 16; // 16 = gap
+                proofsIndex = proofsTotalSlides;
+                proofsTrack.classList.add('no-transition');
+                proofsTrack.style.transform = `translateX(-${proofsIndex * proofsSlideWidth}px)`;
+                setTimeout(() => proofsTrack.classList.remove('no-transition'), 50);
+            }
+            
+            // Відгуки
+            const reviewsFirstSlide = reviewsTrack.querySelector('.slider-item');
+            if (reviewsFirstSlide) {
+                reviewsSlideWidth = reviewsFirstSlide.offsetWidth + 16;
+                reviewsIndex = reviewsTotalSlides;
+                reviewsTrack.classList.add('no-transition');
+                reviewsTrack.style.transform = `translateX(-${reviewsIndex * reviewsSlideWidth}px)`;
+                setTimeout(() => reviewsTrack.classList.remove('no-transition'), 50);
+            }
+        }
+        
+        function slideProofs(direction) {
+            proofsIndex += direction;
+            proofsTrack.style.transform = `translateX(-${proofsIndex * proofsSlideWidth}px)`;
+            
+            // Перевіряємо чи потрібно "перестрибнути"
+            setTimeout(() => {
+                if (proofsIndex >= proofsTotalSlides * 2) {
+                    proofsTrack.classList.add('no-transition');
+                    proofsIndex = proofsTotalSlides;
+                    proofsTrack.style.transform = `translateX(-${proofsIndex * proofsSlideWidth}px)`;
+                    setTimeout(() => proofsTrack.classList.remove('no-transition'), 50);
+                } else if (proofsIndex < proofsTotalSlides) {
+                    proofsTrack.classList.add('no-transition');
+                    proofsIndex = proofsTotalSlides * 2 - 1;
+                    proofsTrack.style.transform = `translateX(-${proofsIndex * proofsSlideWidth}px)`;
+                    setTimeout(() => proofsTrack.classList.remove('no-transition'), 50);
+                }
+            }, 400);
+        }
+        
+        function slideReviews(direction) {
+            reviewsIndex += direction;
+            reviewsTrack.style.transform = `translateX(-${reviewsIndex * reviewsSlideWidth}px)`;
+            
+            setTimeout(() => {
+                if (reviewsIndex >= reviewsTotalSlides * 2) {
+                    reviewsTrack.classList.add('no-transition');
+                    reviewsIndex = reviewsTotalSlides;
+                    reviewsTrack.style.transform = `translateX(-${reviewsIndex * reviewsSlideWidth}px)`;
+                    setTimeout(() => reviewsTrack.classList.remove('no-transition'), 50);
+                } else if (reviewsIndex < reviewsTotalSlides) {
+                    reviewsTrack.classList.add('no-transition');
+                    reviewsIndex = reviewsTotalSlides * 2 - 1;
+                    reviewsTrack.style.transform = `translateX(-${reviewsIndex * reviewsSlideWidth}px)`;
+                    setTimeout(() => reviewsTrack.classList.remove('no-transition'), 50);
+                }
+            }, 400);
+        }
+        
+        // Підтримка свайпів на мобільних
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.getElementById('proofs-slider').addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        document.getElementById('proofs-slider').addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) slideProofs(1);
+            if (touchEndX - touchStartX > 50) slideProofs(-1);
+        }, {passive: true});
+        
+        document.getElementById('reviews-slider').addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        document.getElementById('reviews-slider').addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) slideReviews(1);
+            if (touchEndX - touchStartX > 50) slideReviews(-1);
+        }, {passive: true});
+
+        // ПРАВКА: Таймер на 10 хвилин
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                display.textContent = minutes + ":" + seconds;
+                if (--timer < 0) timer = 0;
+            }, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            startTimer(10 * 60, document.querySelector('#countdown'));
+            initSliders();
+
+            const input = document.querySelector("#phone");
+            const iti = window.intlTelInput(input, {
+                initialCountry: "auto",
+                excludeCountries: ["ru", "by"],
+                preferredCountries: ["ua", "pl", "de"],
+                geoIpLookup: callback => {
+                    fetch("https://ipapi.co/json").then(res => res.json()).then(data => callback(data.country_code)).catch(() => callback("ua"));
+                },
+                utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+                separateDialCode: true, 
+            });
+
+            window.handleOrderSubmit = function(e) {
+                e.preventDefault();
+                const nameInput = document.getElementById('user_name');
+                const telegramInput = document.getElementById('user_telegram');
+                const phoneInput = document.getElementById('phone');
+                const btn = e.target.querySelector('button[type="submit"]');
+
+                if (!iti.isValidNumber()) {
+                    phoneInput.classList.add('input-error');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Обробка...';
+
+                document.getElementById('full_phone').value = iti.getNumber();
+                const formData = new FormData(document.getElementById('order-form'));
+                
+                // Meta Pixel: трекаємо відправку форми
+                if (typeof fbq !== 'undefined') {
+                    fbq('track', 'Lead');
+                }
+                
+                fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData })
+                .then(() => { window.location.href = PAYMENT_URL; })
+                .catch(() => { window.location.href = PAYMENT_URL; });
+            };
+        });
+    </script>
+
+</body>
+</html>
