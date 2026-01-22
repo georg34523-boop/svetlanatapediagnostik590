@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дякую за оплату! | Svitlana Tape</title>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'YOUR_PIXEL_ID_HERE'); // <-- ЗАМІНИ YOUR_PIXEL_ID_HERE на свій ID
+    fbq('track', 'PageView');
+    fbq('track', 'Purchase', {currency: "UAH", value: 0}); // Подія покупки
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+    <!-- End Meta Pixel Code -->
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0b0d12;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .success-card {
+            background: linear-gradient(145deg, #13161c 0%, #0f1116 100%);
+            border: 1px solid #2d323e;
+        }
+        
+        .brand-color {
+            color: #E13030;
+        }
+        
+        .success-icon {
+            background: linear-gradient(145deg, #1a5d1a 0%, #0f3d0f 100%);
+            border: 3px solid #22c55e;
+            box-shadow: 0 0 30px rgba(34, 197, 94, 0.3);
+        }
+        
+        .tg-btn {
+            background: linear-gradient(145deg, #0088cc 0%, #006699 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3);
+        }
+        .tg-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 136, 204, 0.5);
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 2s infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(34, 197, 94, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: { DEFAULT: '#E13030', hover: '#b91c1c' },
+                        dark: { bg: '#0b0d12', card: '#13161c', border: '#2d323e' }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="p-4">
+
+    <div class="success-card rounded-3xl p-8 md:p-12 max-w-lg w-full text-center fade-in">
+        
+        <!-- Success Icon -->
+        <div class="success-icon pulse-ring w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-8">
+            <i class="fa-solid fa-check text-5xl text-green-400"></i>
+        </div>
+        
+        <!-- Heading -->
+        <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-4 uppercase">
+            Дякую за оплату!
+        </h1>
+        
+        <!-- Message -->
+        <div class="space-y-4 mb-8">
+            <p class="text-gray-300 text-lg">
+                Ваше замовлення успішно оформлено <i class="fa-solid fa-heart text-brand"></i>
+            </p>
+            <div class="bg-dark-bg/50 rounded-xl p-4 border border-dark-border">
+                <p class="text-gray-400">
+                    <strong class="text-white">Світлана</strong> зв'яжеться з вами найближчим часом для проведення діагностики.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Divider -->
+        <div class="flex items-center gap-4 mb-8">
+            <div class="h-px bg-dark-border flex-1"></div>
+            <span class="text-gray-500 text-sm uppercase tracking-widest">А поки що</span>
+            <div class="h-px bg-dark-border flex-1"></div>
+        </div>
+        
+        <!-- Telegram CTA -->
+        <div class="space-y-4">
+            <p class="text-gray-300">
+                Заходьте в <strong class="text-white">Telegram-канал Світлани</strong> — там багато корисної інформації для вас!
+            </p>
+            
+            <a href="https://t.me/+myyXteo6viUxMThi" target="_blank" class="tg-btn inline-flex items-center justify-center gap-3 text-white text-lg font-bold py-4 px-8 rounded-xl uppercase tracking-wide w-full">
+                <i class="fa-brands fa-telegram text-2xl"></i>
+                Перейти в Telegram
+            </a>
+        </div>
+        
+        <!-- Footer note -->
+        <p class="text-gray-600 text-xs mt-8">
+            Якщо у вас виникли питання — напишіть нам у Telegram
+        </p>
+        
+    </div>
+
+</body>
+</html>
