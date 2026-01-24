@@ -1,0 +1,9 @@
+{
+  "routes": [
+    {
+      "src": "/thanks.html",
+      "methods": ["GET", "POST"],
+      "dest": "/thanks.html"
+    }
+  ]
+}
