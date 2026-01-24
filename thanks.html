@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Дякую за оплату! | Svitlana Tape</title>
     
+    <!-- Фікс білого екрану після WayForPay -->
+    <script>
+        // Якщо сторінка в iframe — виходимо з нього
+        if (window.top !== window.self) {
+            window.top.location.href = window.location.href;
+        }
+        // Якщо є параметри від WayForPay — перезавантажуємо чисто
+        if (window.location.search && !sessionStorage.getItem('reloaded')) {
+            sessionStorage.setItem('reloaded', 'true');
+            window.location.href = window.location.pathname;
+        }
+    </script>
+    
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -150,6 +163,27 @@
         </p>
         
     </div>
+
+    <!-- Скрипт для оновлення статусу оплати в Google Таблиці -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Отримуємо телефон з localStorage (збережений при відправці форми)
+            var phone = localStorage.getItem('user_phone');
+            
+            if (phone) {
+                // Надсилаємо запит в Google Таблицю
+                var webhookUrl = 'https://script.google.com/macros/s/AKfycbyexy-Gc8yPVSP6m3dE23CmYPv8yynH3Nmze5qi6v4cYyTl3kID5GkqdyRMYNeS9q1a/exec';
+                
+                fetch(webhookUrl + '?phone=' + encodeURIComponent(phone), {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+                
+                // Очищаємо localStorage
+                localStorage.removeItem('user_phone');
+            }
+        });
+    </script>
 
 </body>
 </html>
