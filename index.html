@@ -594,8 +594,21 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwHekKMuSo4naCZ12hcFtCiQZht6WCmraWFsunM3OUMaRJAp0qWkZdI7JlYvqMcfVUu/exec'; 
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyexy-Gc8yPVSP6m3dE23CmYPv8yynH3Nmze5qi6v4cYyTl3kID5GkqdyRMYNeS9q1a/exec'; 
         const PAYMENT_URL = 'https://secure.wayforpay.com/button/b758794a9116f';
+
+        // Функція для отримання UTM параметрів з URL
+        function getUTMParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                campaign_name: params.get('campaign_name') || params.get('utm_campaign') || '',
+                adset_name: params.get('adset_name') || params.get('utm_medium') || '',
+                ad_name: params.get('ad_name') || params.get('utm_content') || ''
+            };
+        }
+        
+        // Зберігаємо UTM при завантаженні сторінки
+        const utmParams = getUTMParams();
 
         function openModal() { 
             document.getElementById('order-modal').classList.remove('hidden'); 
@@ -788,7 +801,16 @@
                 btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Обробка...';
 
                 document.getElementById('full_phone').value = iti.getNumber();
+                
+                // Зберігаємо телефон для сторінки thanks.html
+                localStorage.setItem('user_phone', iti.getNumber());
+                
                 const formData = new FormData(document.getElementById('order-form'));
+                
+                // Додаємо UTM параметри
+                formData.append('campaign_name', utmParams.campaign_name);
+                formData.append('adset_name', utmParams.adset_name);
+                formData.append('ad_name', utmParams.ad_name);
                 
                 // Meta Pixel: трекаємо відправку форми
                 if (typeof fbq !== 'undefined') {
