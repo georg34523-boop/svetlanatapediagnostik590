@@ -822,45 +822,12 @@
                     fbq('track', 'Lead');
                 }
                 
-                // Відправляємо в скрипт і отримуємо дані для оплати
+                // Відправляємо в скрипт і отримуємо URL оплати
                 fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: formData })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.paymentData) {
-                        // Створюємо приховану форму для POST на WayForPay
-                        const form = document.createElement('form');
-                        form.method = 'POST';
-                        form.action = 'https://secure.wayforpay.com/pay';
-                        form.style.display = 'none';
-                        
-                        const pd = data.paymentData;
-                        const fields = {
-                            'merchantAccount': pd.merchantAccount,
-                            'merchantDomainName': pd.merchantDomainName,
-                            'orderReference': pd.orderReference,
-                            'orderDate': pd.orderDate,
-                            'amount': pd.amount,
-                            'currency': pd.currency,
-                            'productName[]': pd.productName,
-                            'productCount[]': pd.productCount,
-                            'productPrice[]': pd.productPrice,
-                            'merchantSignature': pd.merchantSignature,
-                            'returnUrl': pd.returnUrl,
-                            'serviceUrl': pd.serviceUrl,
-                            'clientFirstName': pd.clientFirstName,
-                            'clientPhone': pd.clientPhone
-                        };
-                        
-                        for (const [key, value] of Object.entries(fields)) {
-                            const input = document.createElement('input');
-                            input.type = 'hidden';
-                            input.name = key;
-                            input.value = value;
-                            form.appendChild(input);
-                        }
-                        
-                        document.body.appendChild(form);
-                        form.submit();
+                    if (data.paymentUrl) {
+                        window.location.href = data.paymentUrl;
                     } else {
                         alert('Помилка створення платежу');
                         btn.disabled = false;
