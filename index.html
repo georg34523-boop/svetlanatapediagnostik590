@@ -594,8 +594,9 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyexy-Gc8yPVSP6m3dE23CmYPv8yynH3Nmze5qi6v4cYyTl3kID5GkqdyRMYNeS9q1a/exec'; 
-        const PAYMENT_URL = 'https://secure.wayforpay.com/button/b758794a9116f';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw2MnA-QEovr9lOrhitXx73EkJH4lH5tFTg0WepdIPcxEuHVMfX9DM9dbxfoBlUayMw/exec'; 
+        const AMOUNT = '1';
+        const RETURN_URL = 'https://svetlanatapediagnostik590.vercel.app/thanks.html';
 
         // Функція для отримання UTM параметрів з URL
         function getUTMParams() {
@@ -812,14 +813,33 @@
                 formData.append('adset_name', utmParams.adset_name);
                 formData.append('ad_name', utmParams.ad_name);
                 
+                // Додаємо суму і return_url
+                formData.append('amount', AMOUNT);
+                formData.append('return_url', RETURN_URL);
+                
                 // Meta Pixel: трекаємо відправку форми
                 if (typeof fbq !== 'undefined') {
                     fbq('track', 'Lead');
                 }
                 
-                fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData })
-                .then(() => { window.location.href = PAYMENT_URL; })
-                .catch(() => { window.location.href = PAYMENT_URL; });
+                // Відправляємо в скрипт і отримуємо URL оплати
+                fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: formData })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.paymentUrl) {
+                        window.location.href = data.paymentUrl;
+                    } else {
+                        alert('Помилка створення платежу');
+                        btn.disabled = false;
+                        btn.innerHTML = 'Перейти до оплати';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Помилка з\'єднання');
+                    btn.disabled = false;
+                    btn.innerHTML = 'Перейти до оплати';
+                });
             };
         });
     </script>
