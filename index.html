@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -595,7 +594,7 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyexy-Gc8yPVSP6m3dE23CmYPv8yynH3Nmze5qi6v4cYyTl3kID5GkqdyRMYNeS9q1a/exec'; 
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxNMSCCot5ACYNKcXtY29NybcyuarZ9xG8TRQAwMUu2nCoJytjVFnsZuoQlUDybiYcf/exec'; 
         const PAYMENT_URL = 'https://secure.wayforpay.com/button/b758794a9116f';
 
         // Функція для отримання UTM параметрів з URL
@@ -604,7 +603,8 @@
             return {
                 campaign_name: params.get('campaign_name') || params.get('utm_campaign') || '',
                 adset_name: params.get('adset_name') || params.get('utm_medium') || '',
-                ad_name: params.get('ad_name') || params.get('utm_content') || ''
+                ad_name: params.get('ad_name') || params.get('utm_content') || '',
+                traff_eu: params.get('traff_eu') || ''
             };
         }
         
@@ -812,6 +812,7 @@
                 formData.append('campaign_name', utmParams.campaign_name);
                 formData.append('adset_name', utmParams.adset_name);
                 formData.append('ad_name', utmParams.ad_name);
+                formData.append('traff_eu', utmParams.traff_eu);
                 
                 // Meta Pixel: трекаємо відправку форми
                 if (typeof fbq !== 'undefined') {
