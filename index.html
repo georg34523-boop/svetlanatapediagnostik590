@@ -594,8 +594,9 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxNMSCCot5ACYNKcXtY29NybcyuarZ9xG8TRQAwMUu2nCoJytjVFnsZuoQlUDybiYcf/exec'; 
-        const PAYMENT_URL = 'https://secure.wayforpay.com/button/b758794a9116f';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZr5XOr3ZcamU2m-1bAmwQ6g4kDJXYHFPKrzQoFqzjYSBt4n8EOMydJeyuObzLEB0/exec'; 
+        const AMOUNT = '590';
+        const RETURN_URL = 'https://svetlanatapediagnostik590.vercel.app/thanks.html';
 
         // Функція для отримання UTM параметрів з URL
         function getUTMParams() {
@@ -814,14 +815,83 @@
                 formData.append('ad_name', utmParams.ad_name);
                 formData.append('traff_eu', utmParams.traff_eu);
                 
+                // Додаємо суму і return_url для API
+                formData.append('amount', AMOUNT);
+                formData.append('return_url', RETURN_URL);
+                
                 // Meta Pixel: трекаємо відправку форми
                 if (typeof fbq !== 'undefined') {
                     fbq('track', 'Lead');
                 }
                 
-                fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: formData })
-                .then(() => { window.location.href = PAYMENT_URL; })
-                .catch(() => { window.location.href = PAYMENT_URL; });
+                // Відправляємо в скрипт і отримуємо дані для оплати
+                console.log('Відправляю запит на:', GOOGLE_SCRIPT_URL);
+                
+                fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: formData })
+                .then(response => {
+                    console.log('Отримано відповідь:', response);
+                    console.log('Status:', response.status);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Дані від скрипта:', data);
+                    if (data.paymentData) {
+                        console.log('paymentData знайдено, створюю форму...');
+                        // Створюємо приховану форму для POST на WayForPay
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = 'https://secure.wayforpay.com/pay';
+                        form.target = '_top';
+                        form.style.display = 'none';
+                        
+                        const pd = data.paymentData;
+                        console.log('pd:', pd);
+                        const fields = {
+                            'merchantAccount': pd.merchantAccount,
+                            'merchantDomainName': pd.merchantDomainName,
+                            'orderReference': pd.orderReference,
+                            'orderDate': pd.orderDate,
+                            'amount': pd.amount,
+                            'currency': pd.currency,
+                            'productName[]': pd.productName,
+                            'productCount[]': pd.productCount,
+                            'productPrice[]': pd.productPrice,
+                            'merchantSignature': pd.merchantSignature,
+                            'returnUrl': pd.returnUrl,
+                            'returnMethod': 'GET',
+                            'serviceUrl': pd.serviceUrl,
+                            'clientFirstName': pd.clientFirstName,
+                            'clientPhone': pd.clientPhone
+                        };
+                        
+                        console.log('fields:', fields);
+                        
+                        for (const [key, value] of Object.entries(fields)) {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = key;
+                            input.value = value;
+                            form.appendChild(input);
+                        }
+                        
+                        console.log('Форма створена, відправляю...');
+                        document.body.appendChild(form);
+                        form.submit();
+                        console.log('Форма відправлена');
+                    } else {
+                        alert('Помилка створення платежу: ' + JSON.stringify(data));
+                        btn.disabled = false;
+                        btn.innerHTML = 'Перейти до оплати';
+                    }
+                })
+                .catch(error => {
+                    console.error('ПОМИЛКА fetch:', error);
+                    console.error('Тип помилки:', error.name);
+                    console.error('Повідомлення:', error.message);
+                    alert('Помилка з\'єднання: ' + error.message);
+                    btn.disabled = false;
+                    btn.innerHTML = 'Перейти до оплати';
+                });
             };
         });
     </script>
