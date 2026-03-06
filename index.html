@@ -594,9 +594,9 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZr5XOr3ZcamU2m-1bAmwQ6g4kDJXYHFPKrzQoFqzjYSBt4n8EOMydJeyuObzLEB0/exec'; 
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzs5mmTFEAfsP64PRv1cgwPa82ZFYYd-3SoYPuyWjIg5oDr2tBrApaGpLLmJDUaLj2Bjw/exec'; 
         const AMOUNT = '590';
-        const RETURN_URL = 'https://svetlanatapediagnostik590.vercel.app/thanks.html';
+        const RETURN_URL = 'https://testlendosa.vercel.app/thanks.html';
 
         // Функція для отримання UTM параметрів з URL
         function getUTMParams() {
@@ -837,6 +837,10 @@
                     console.log('Дані від скрипта:', data);
                     if (data.paymentData) {
                         console.log('paymentData знайдено, створюю форму...');
+                        
+                        // Зберігаємо orderId для thanks.html
+                        localStorage.setItem('pending_order_id', data.orderId);
+                        
                         // Створюємо приховану форму для POST на WayForPay
                         const form = document.createElement('form');
                         form.method = 'POST';
