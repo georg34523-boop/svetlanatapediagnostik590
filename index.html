@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Діагностика обличчя | Svitlana Tape</title>
-    
+    <title>Жива діагностика обличчя у Zoom | Svitlana Tape</title>
+
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -15,20 +15,20 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1548773689373078'); // <-- ЗАМІНИ YOUR_PIXEL_ID_HERE на свій ID
+    fbq('init', '1548773689373078');
     fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1548773689373078&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Бібліотека для телефонів -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
 
@@ -39,14 +39,14 @@
             background-color: #0b0d12;
             color: #ffffff;
         }
-        
+
         /* Анімації */
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out forwards;
             opacity: 0;
             transform: translateY(30px);
         }
-        
+
         @keyframes fadeInUp {
             to { opacity: 1; transform: translateY(0); }
         }
@@ -59,10 +59,10 @@
             background-repeat: no-repeat;
             position: relative;
         }
-        
+
         .hero-overlay {
             background: linear-gradient(
-                to bottom, 
+                to bottom,
                 rgba(11, 13, 18, 0.3) 0%,
                 rgba(11, 13, 18, 0.7) 60%,
                 #0b0d12 100%
@@ -101,6 +101,25 @@
         }
 
         .price-glow { text-shadow: 0 0 20px rgba(225, 48, 48, 0.8); }
+
+        /* Плашка формату */
+        .format-pill {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(6px);
+        }
+
+        /* Кроки */
+        .step-num {
+            background: #E13030;
+            color: #fff;
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.1rem;
+            flex-shrink: 0;
+            box-shadow: 0 0 18px rgba(225,48,48,0.35);
+        }
 
         /* Таймер */
         .timer-box {
@@ -153,29 +172,30 @@
             overflow: hidden;
             width: 100%;
         }
-        
+
         .infinite-slider-track {
             display: flex;
             gap: 1rem;
             transition: transform 0.4s ease;
+            align-items: flex-start;
         }
-        
+
         .infinite-slider-track.no-transition {
             transition: none;
         }
-        
+
         .slider-item {
             flex: 0 0 85%;
             min-width: 85%;
         }
-        
+
         @media (min-width: 768px) {
             .slider-item {
                 flex: 0 0 40%;
                 min-width: 40%;
             }
         }
-        
+
         .slider-nav {
             position: absolute;
             top: 50%;
@@ -194,26 +214,47 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(225, 48, 48, 0.4);
         }
-        
+
         .slider-nav:hover {
             background: #b91c1c;
             transform: translateY(-50%) scale(1.1);
         }
-        
-        .slider-nav.prev {
-            left: 10px;
-        }
-        
-        .slider-nav.next {
-            right: 10px;
-        }
-        
+
+        .slider-nav.prev { left: 10px; }
+        .slider-nav.next { right: 10px; }
+
         @media (max-width: 767px) {
-            .slider-nav {
-                width: 35px;
-                height: 35px;
-            }
+            .slider-nav { width: 35px; height: 35px; }
         }
+
+        /* FAQ */
+        .faq-item { border-bottom: 1px solid #2d323e; }
+        .faq-q {
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem 0;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-a { max-height: 500px; padding-bottom: 1.25rem; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-icon { transition: transform 0.3s ease; color: #E13030; }
 
         /* Кнопки */
         .cta-btn {
@@ -249,6 +290,8 @@
             background: linear-gradient(145deg, #13161c 0%, #0b0d12 100%);
             border: 1px solid #E13030;
             box-shadow: 0 0 50px rgba(225, 48, 48, 0.2);
+            max-height: 92vh;
+            overflow-y: auto;
         }
 
         /* Intl Tel Input Dark Theme */
@@ -267,7 +310,7 @@
             outline: none !important;
         }
     </style>
-    
+
     <script>
         tailwind.config = {
             theme: {
@@ -286,65 +329,78 @@
     <!-- ========================================== -->
     <!-- HERO SECTION -->
     <!-- ========================================== -->
-    <header class="w-full hero-section flex flex-col items-center justify-center min-h-[100dvh] md:min-h-[850px]">
+    <header class="w-full hero-section flex flex-col items-center justify-center min-h-[100dvh] md:min-h-[880px]">
         <div class="hero-overlay"></div>
-        
-        <!-- ПРАВКА: mt-4 для мобільних для підняття тексту -->
+
         <div class="hero-content w-full max-w-4xl px-4 py-8 md:py-12 flex flex-col items-center text-center mt-4 md:mt-0">
-            
+
             <div class="fade-in-up mb-4 md:mb-6">
-                <span class="price-badge px-6 py-2 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest animate-pulse">
-                    Персональна діагностика
+                <span class="price-badge px-6 py-2 rounded-full text-[10px] md:text-sm font-bold uppercase tracking-widest">
+                    Жива діагностика 1-на-1
                 </span>
             </div>
 
-            <h1 class="text-2xl md:text-5xl lg:text-6xl font-extrabold mb-2 md:mb-4 leading-tight fade-in-up uppercase text-white drop-shadow-xl">
-                Отримай рішення як виглядати <br>на 10 років <span class="text-brand">молодше</span> і прибрати зморшки
+            <h1 class="text-2xl md:text-5xl lg:text-6xl font-extrabold mb-3 md:mb-4 leading-tight fade-in-up uppercase text-white drop-shadow-xl">
+                Розберемо твоє обличчя <span class="text-brand">разом</span> — наживо, у Zoom
             </h1>
-            
-            <h2 class="text-lg md:text-2xl lg:text-3xl font-extrabold mb-4 md:mb-6 leading-tight fade-in-up uppercase text-white drop-shadow-xl">
-                — без уколів, ботоксу та дорогих косметологів
+
+            <h2 class="text-base md:text-2xl lg:text-3xl font-extrabold mb-4 md:mb-6 leading-tight fade-in-up uppercase text-white drop-shadow-xl">
+                Ти дізнаєшся справжні причини змін і вийдеш із чітким планом — без уколів і ботоксу
             </h2>
 
-            <p class="text-gray-100 text-sm md:text-xl max-w-2xl mb-6 md:mb-8 fade-in-up font-medium drop-shadow-lg leading-tight" style="animation-delay: 0.1s;">
-                Отримай персональну діагностику, на якій я детально розберу твоє обличчя. Ти отримаєш чіткий покроковий план та всі рекомендації.
+            <!-- ФОРМАТ — коротко і чітко -->
+            <div class="flex flex-wrap justify-center gap-2 md:gap-3 mb-5 md:mb-6 fade-in-up" style="animation-delay: 0.08s;">
+                <span class="format-pill px-4 py-2 rounded-full text-[11px] md:text-sm font-semibold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-video text-brand"></i> Zoom, відеозустріч
+                </span>
+                <span class="format-pill px-4 py-2 rounded-full text-[11px] md:text-sm font-semibold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-clock text-brand"></i> 45–60 хвилин
+                </span>
+                <span class="format-pill px-4 py-2 rounded-full text-[11px] md:text-sm font-semibold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user text-brand"></i> Особисто зі Світланою
+                </span>
+            </div>
+
+            <p class="text-gray-100 text-sm md:text-xl max-w-2xl mb-6 md:mb-8 fade-in-up font-medium drop-shadow-lg leading-snug" style="animation-delay: 0.1s;">
+                Це <strong class="text-white">не запис, не бот і не шаблонна відповідь</strong>. Це жива зустріч, де я дивлюся саме на твоє обличчя, показую, що з ним відбувається, і відповідаю на всі твої питання.
             </p>
 
-            <!-- ПРАВКА 4: Компактна вертикальна плашка ціни -->
-            <div class="flex flex-col items-center gap-3 mb-6 md:mb-10 fade-in-up" style="animation-delay: 0.2s;">
-                <div class="flex flex-col items-center bg-black/60 px-8 py-3 rounded-2xl backdrop-blur-md border border-white/10 shadow-xl min-w-[200px]">
-                    <span class="text-5xl md:text-7xl font-extrabold text-white price-glow leading-none">590 грн</span>
+            <!-- ЦІНА -->
+            <div class="flex flex-col items-center gap-3 mb-6 md:mb-8 fade-in-up" style="animation-delay: 0.2s;">
+                <div class="flex flex-col items-center bg-black/60 px-8 py-3 rounded-2xl backdrop-blur-md border border-white/10 shadow-xl min-w-[210px]">
+                    <span class="text-5xl md:text-7xl font-extrabold text-white price-glow leading-none">790 грн</span>
                     <span class="text-gray-400 text-sm md:text-xl line-through decoration-red-500/80 decoration-2 mt-2">1790 грн</span>
                 </div>
-                
-                <!-- ПРАВКА: Текст таймера та час 10:00 -->
+
                 <div class="timer-box px-6 py-2 rounded-xl flex items-center gap-3 mt-1 shadow-lg">
-                    <span class="text-gray-200 text-[10px] md:text-xs font-bold uppercase tracking-widest">До збільшення ціни:</span>
-                    <span id="countdown" class="text-xl md:text-2xl font-mono font-bold text-brand w-[80px] text-center">10:00</span>
+                    <span class="text-gray-200 text-[10px] md:text-xs font-bold uppercase tracking-widest">До кінця знижки:</span>
+                    <span id="countdown" class="text-lg md:text-2xl font-mono font-bold text-brand w-[95px] text-center">24:00:00</span>
                 </div>
             </div>
 
-            <!-- ПРАВКА: Новий текст кнопки -->
-            <button onclick="openModal()" class="flex cta-btn text-lg font-bold py-4 md:py-5 px-12 md:px-16 rounded-full uppercase tracking-wide items-center justify-center gap-3 fade-in-up max-w-sm" style="animation-delay: 0.3s;">
-                Хочу розбір обличчя <i class="fa-solid fa-angle-right"></i>
+            <button onclick="openModal()" class="flex cta-btn text-base md:text-lg font-bold py-4 md:py-5 px-10 md:px-16 rounded-full uppercase tracking-wide items-center justify-center gap-3 fade-in-up max-w-sm" style="animation-delay: 0.3s;">
+                Записатися на діагностику <i class="fa-solid fa-angle-right"></i>
             </button>
+
+            <p class="text-gray-300 text-[11px] md:text-sm mt-4 fade-in-up flex items-center gap-2" style="animation-delay: 0.35s;">
+                <i class="fa-solid fa-shield-halved text-brand"></i> 100% повернення коштів, якщо діагностика не буде корисною
+            </p>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- ДОКАЗИ (Слайдер) - БЕЗКІНЕЧНИЙ -->
+    <!-- ДОКАЗИ (Слайдер) -->
     <!-- ========================================== -->
     <section class="w-full max-w-6xl px-4 py-12 relative z-10 -mt-10 md:-mt-20">
         <h2 class="text-lg md:text-xl font-bold text-white mb-6 text-center uppercase tracking-widest bg-dark-bg/80 backdrop-blur inline-block px-6 py-2 rounded-full border border-dark-border mx-auto block w-fit">
-            Ось як змінюються обличчя після діагностики:
+            Ось як змінюються обличчя жінок, які працюють правильно:
         </h2>
-        
+
         <div class="infinite-slider-container" id="proofs-slider">
-            <button class="slider-nav prev" onclick="slideProofs(-1)">
+            <button class="slider-nav prev" onclick="slideProofs(-1)" aria-label="Попереднє">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
             <div class="infinite-slider-track" id="proofs-track">
-                <!-- Оригінальні слайди -->
                 <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
                     <img src="reviews7.jpg" alt="Результат До Після 7" class="w-full h-auto rounded-xl object-contain">
                 </div>
@@ -357,7 +413,6 @@
                 <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
                     <img src="reviews10.jpg" alt="Результат До Після 10" class="w-full h-auto rounded-xl object-contain">
                 </div>
-                <!-- НОВІ 4 ФОТО - додай файли з такими назвами -->
                 <div class="slider-item custom-card p-2 rounded-2xl overflow-hidden shadow-2xl">
                     <img src="reviews11.jpg" alt="Результат До Після 11" class="w-full h-auto rounded-xl object-contain">
                 </div>
@@ -371,7 +426,7 @@
                     <img src="reviews14.jpg" alt="Результат До Після 14" class="w-full h-auto rounded-xl object-contain">
                 </div>
             </div>
-            <button class="slider-nav next" onclick="slideProofs(1)">
+            <button class="slider-nav next" onclick="slideProofs(1)" aria-label="Наступне">
                 <i class="fa-solid fa-chevron-right"></i>
             </button>
         </div>
@@ -381,125 +436,234 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- ДЛЯ КОГО -->
+    <!-- ЯК ПРОХОДИТЬ ДІАГНОСТИКА — головний новий блок -->
     <!-- ========================================== -->
-    <section class="w-full max-w-5xl px-4 py-16 relative z-10">
-        <div class="text-center mb-12">
-            <h2 class="text-2xl md:text-3xl font-bold text-white uppercase mb-4">
-                Чому ти старієш <span class="text-brand">швидше, ніж могла б?</span>
-            </h2>
-            <p class="text-gray-400">90% дівчат роблять одні й ті самі помилки.</p>
-        </div>
-        <div class="space-y-4">
-            <div class="value-card p-6 rounded-r-xl">
-                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
-                    <i class="fa-solid fa-triangle-exclamation text-brand"></i> Сліпе копіювання
-                </h3>
-                <p class="text-gray-400 text-sm">Ти робиш вправи з Instagram, не знаючи, що вони можуть поглиблювати зморшки.</p>
-            </div>
-            <div class="value-card p-6 rounded-r-xl">
-                <!-- ПРАВКА 3: "Уколи — пастка" -->
-                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
-                    <i class="fa-solid fa-syringe text-brand"></i> Уколи — пастка
-                </h3>
-                <p class="text-gray-400 text-sm">Замість вирішення причини, уколи часто просто "заморожують" проблему та погіршують лімфовідтік.</p>
-            </div>
-            <div class="value-card p-6 rounded-r-xl">
-                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
-                    <i class="fa-solid fa-hand-holding-dollar text-brand"></i> Боротьба з наслідками
-                </h3>
-                <p class="text-gray-400 text-sm">Без усунення причини (затиснута шия, застій лімфи) креми — це гроші на вітер.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- ЩО ВСЕРЕДИНІ -->
-    <!-- ========================================== -->
-    <section class="w-full bg-dark-card border-y border-dark-border py-16 mt-12">
+    <section class="w-full bg-dark-card border-y border-dark-border py-16">
         <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-2xl md:text-4xl font-bold text-white mb-4 text-center uppercase">Косметологи <span class="text-brand">приховують</span> це, бо <span class="text-brand">заробляють</span> на тобі</h2>
-            <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-                Я глибоко аналізую твої фото та анкету і записую детальні голосові та відео-повідомлення.
+            <h2 class="text-2xl md:text-4xl font-bold text-white mb-3 text-center uppercase">
+                Як проходить <span class="text-brand">жива діагностика</span>
+            </h2>
+            <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto text-sm md:text-base">
+                Щоб ти точно розуміла, за що платиш і що буде далі — ось усі кроки.
             </p>
-            <div class="space-y-6">
-                <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand relative overflow-hidden">
-                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-dna text-brand"></i> Повний "рентген" обличчя</h3>
-                    <p class="text-gray-300 text-sm md:text-base leading-relaxed pl-8">Я поясню твій тип старіння і покажу приховані причини змін.</p>
-                </div>
-                <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand relative overflow-hidden">
-                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-list-check text-brand"></i> Персональна стратегія</h3>
-                    <p class="text-gray-300 text-sm md:text-base leading-relaxed pl-8">Ти отримаєш чіткий план: які техніки врятують твоє обличчя, а що заборонено.</p>
-                </div>
-            </div>
-            <div class="text-center mt-10">
-                <p class="text-brand font-bold uppercase tracking-widest text-sm animate-pulse mb-4"><i class="fa-solid fa-gift mr-1"></i> Цінність — економія років помилок</p>
-                <button onclick="openModal()" class="cta-btn text-lg font-bold py-4 px-10 rounded-full uppercase tracking-wide inline-flex items-center gap-2">
-                    Хочу такий розбір <i class="fa-solid fa-arrow-down"></i>
-                </button>
-            </div>
-        </div>
-    </section>
 
-    <!-- ========================================== -->
-    <!-- ЕКСПЕРТ (РОЗШИРЕНИЙ БЛОК) -->
-    <!-- ========================================== -->
-    <section class="w-full max-w-5xl mx-auto px-4 py-16">
-        <div class="flex flex-col md:flex-row items-center gap-12">
-            <div class="w-full md:w-1/2 relative">
-                <div class="relative rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(225,48,48,0.15)] border border-dark-border">
-                    <img src="page1.jpg" alt="Svitlana Expert" class="w-full h-auto object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#0b0d12] to-transparent opacity-80"></div>
-                    <div class="absolute bottom-6 left-6">
-                        <p class="text-brand text-sm font-bold uppercase tracking-widest mb-1">Експерт</p>
-                        <h3 class="text-3xl font-bold text-white uppercase">Svitlana Gavryliuk</h3>
+            <div class="space-y-5">
+                <div class="custom-card p-5 md:p-7 rounded-2xl flex gap-5 items-start">
+                    <div class="step-num">1</div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-1">Залишаєш заявку і оплачуєш 790 грн</h3>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">Потрібні лише ім'я та номер телефону. Оплата карткою — займає хвилину.</p>
+                    </div>
+                </div>
+
+                <div class="custom-card p-5 md:p-7 rounded-2xl flex gap-5 items-start">
+                    <div class="step-num">2</div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-1">Одразу отримуєш доступ у Telegram</h3>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">Після оплати ти автоматично отримуєш посилання. Там ми узгоджуємо зручний для тебе день і час зустрічі.</p>
+                    </div>
+                </div>
+
+                <div class="custom-card p-5 md:p-7 rounded-2xl flex gap-5 items-start">
+                    <div class="step-num">3</div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-1">Надсилаєш фото обличчя заздалегідь</h3>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">Кілька фото у різних ракурсах — щоб я підготувалась до зустрічі й ми не витрачали на це твій час у Zoom.</p>
+                    </div>
+                </div>
+
+                <div class="custom-card p-5 md:p-7 rounded-2xl flex gap-5 items-start border-l-4 border-brand">
+                    <div class="step-num">4</div>
+                    <div>
+                        <h3 class="text-lg md:text-xl font-bold text-white mb-1">Зустрічаємось у Zoom на 45–60 хвилин</h3>
+                        <p class="text-gray-400 text-sm md:text-base leading-relaxed">Наживо, вдвох. Я показую, що відбувається з твоїм обличчям, пояснюю причини, даю план і відповідаю на будь-які твої питання. Можеш конспектувати — ми не поспішаємо.</p>
                     </div>
                 </div>
             </div>
-            
-            <div class="w-full md:w-1/2">
-                <h2 class="text-2xl md:text-4xl font-bold text-white mb-6 uppercase leading-snug">
-                    Я бачу не зморшку, <br><span class="text-brand">а причину</span>
+
+            <div class="text-center mt-10">
+                <button onclick="openModal()" class="cta-btn text-base md:text-lg font-bold py-4 px-10 rounded-full uppercase tracking-wide inline-flex items-center gap-2 max-w-sm">
+                    Записатися на діагностику <i class="fa-solid fa-angle-right"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ЩО ТИ ОТРИМАЄШ -->
+    <!-- ========================================== -->
+    <section class="w-full max-w-4xl px-4 py-16 mx-auto">
+        <h2 class="text-2xl md:text-4xl font-bold text-white mb-3 text-center uppercase">
+            Що ти отримаєш <span class="text-brand">за 45–60 хвилин</span>
+        </h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto text-sm md:text-base">
+            Не загальні поради з інтернету, а конкретика саме по твоєму обличчю.
+        </p>
+
+        <div class="space-y-5">
+            <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand">
+                <h3 class="text-lg md:text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-dna text-brand"></i> Твій тип старіння</h3>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed md:pl-8">Обличчя старіє по-різному: одне «пливе», інше сохне, третє набрякає. Ти дізнаєшся, що відбувається саме з твоїм — і чому.</p>
+            </div>
+            <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand">
+                <h3 class="text-lg md:text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-magnifying-glass text-brand"></i> Справжні причини твоїх змін</h3>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed md:pl-8">Конкретно: що тягне овал вниз, звідки набряки, чому залом на чолі глибшає. Причина, а не наслідок.</p>
+            </div>
+            <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand">
+                <h3 class="text-lg md:text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-list-check text-brand"></i> Покроковий план під тебе</h3>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed md:pl-8">Які техніки робити, в якому порядку, скільки хвилин і як часто. Формат, який реально вписати в день — навіть якщо в тебе діти й 20 вільних хвилин.</p>
+            </div>
+            <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand">
+                <h3 class="text-lg md:text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-ban text-brand"></i> Список того, чого робити НЕ можна</h3>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed md:pl-8">Часто це важливіше за сам план. Ти перестанеш робити те, що зараз працює проти твого обличчя.</p>
+            </div>
+            <div class="custom-card p-6 md:p-8 rounded-2xl border-l-4 border-brand">
+                <h3 class="text-lg md:text-xl font-bold text-white mb-2 flex items-center gap-3"><i class="fa-solid fa-comments text-brand"></i> Відповіді на твої питання</h3>
+                <p class="text-gray-300 text-sm md:text-base leading-relaxed md:pl-8">Головна перевага живого формату: ти можеш перепитати, уточнити, показати проблемну зону просто в камеру.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- СПРАВЖНІ ПРИЧИНИ -->
+    <!-- ========================================== -->
+    <section class="w-full bg-dark-card border-y border-dark-border py-16">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl md:text-3xl font-bold text-white uppercase mb-3">
+                    Чому обличчя старіє <span class="text-brand">швидше, ніж могло б</span>
                 </h2>
-                
-                <div class="space-y-4 text-gray-300 text-sm md:text-base leading-relaxed">
-                    <p class="font-medium text-white">
-                        Привіт, я Світлана — спеціаліст з естетичного тейпування та природного омолодження.
-                    </p>
-                    <p>
-                        Я пропрацювала з багатьма обличчями жінок. Мій підхід базується на глибокому знанні анатомії: кісток, м'язів, фасцій та лімфатичної системи. Я не вірю в "погану генетику", я вірю в правильну систему.
-                    </p>
-                    <p>
-                        Багато дівчат приходять до мене зі страхом: "Я боюся щось робити, бо не знаю як", або після невдалих "уколів краси". Моє завдання — не просто дати вправу, а навчити тебе розуміти своє обличчя, як карту.
-                    </p>
-                    <p>
-                        Я не даю шаблонних порад. На діагностиці я розберу саме ТВОЮ ситуацію, щоб ти точно знала, як повернути молодість безпечно та екологічно, без скальпеля та ін'єкцій.
-                    </p>
+                <p class="text-gray-400 text-sm md:text-base">Справа не в генетиці. Ось що щодня працює проти твого обличчя.</p>
+            </div>
+            <div class="space-y-4">
+                <div class="value-card p-6 rounded-r-xl">
+                    <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-bolt text-brand"></i> Хронічний стрес
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Ти живеш у постійній напрузі вже не перший рік. Обличчя тримає цю напругу: стиснута щелепа, зведені брови, заціпенілі м'язи. Багато жінок кажуть, що за останні роки обличчя «постаріло» різкіше, ніж за все життя до того.</p>
+                </div>
+                <div class="value-card p-6 rounded-r-xl">
+                    <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-moon text-brand"></i> Недосип і збитий режим
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Уночі організм відновлює тканини. Спиш мало або уривками — вранці набряки, темні кола і той самий втомлений вигляд, через який ти виглядаєш старшою, ніж є.</p>
+                </div>
+                <div class="value-card p-6 rounded-r-xl">
+                    <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-person-walking text-brand"></i> Затиснута шия та постава
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Телефон, ноутбук, голова весь день опущена вниз. Лімфа не відтікає, кров не доходить — і овал пливе, а підборіддя «сповзає». Це не про шкіру, це про механіку.</p>
+                </div>
+                <div class="value-card p-6 rounded-r-xl">
+                    <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                        <i class="fa-solid fa-bed text-brand"></i> Звички, про які ти не думаєш
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Спати обличчям у подушку, терти очі, мружитись, тримати одну й ту саму мімічну гримасу. Заломи від сну на щоці — це саме звідси.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- ВІДГУКИ - БЕЗКІНЕЧНИЙ СЛАЙДЕР -->
+    <!-- ЧОМУ ТЕ, ЩО ТИ ПРОБУВАЛА, НЕ СПРАЦЮВАЛО -->
+    <!-- ========================================== -->
+    <section class="w-full max-w-5xl px-4 py-16 mx-auto">
+        <h2 class="text-2xl md:text-3xl font-bold text-white uppercase mb-12 text-center">
+            І чому те, що ти вже пробувала, <span class="text-brand">не дало результату</span>
+        </h2>
+        <div class="grid md:grid-cols-3 gap-5">
+            <div class="custom-card p-6 rounded-2xl">
+                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-triangle-exclamation text-brand"></i> Вправи з інтернету
+                </h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Хапаєш одне, інше — а результату нема. Кожна блогерка каже своє, техніки суперечать одна одній, а деякі рухи при твоєму типі старіння можуть навіть поглиблювати заломи.</p>
+            </div>
+            <div class="custom-card p-6 rounded-2xl">
+                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-syringe text-brand"></i> Уколи
+                </h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Вони прибирають наслідок, а не причину. Через пів року все повертається — і потрібна нова процедура. А затиснута шия, застій лімфи та напружена щелепа нікуди не поділись.</p>
+            </div>
+            <div class="custom-card p-6 rounded-2xl">
+                <h3 class="font-bold text-lg text-white mb-2 flex items-center gap-3">
+                    <i class="fa-solid fa-hand-holding-dollar text-brand"></i> Креми й процедури
+                </h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Крем працює на рівні шкіри. Але якщо обличчя пливе через м'язи, фасції та лімфу — це гроші за косметичний ефект на кілька годин.</p>
+            </div>
+        </div>
+
+        <p class="text-center text-white text-base md:text-xl font-bold mt-10 max-w-3xl mx-auto leading-snug">
+            Проблема не в тому, що ти нічого не робиш. Проблема в тому, що ніхто не подивився саме на <span class="text-brand">твоє</span> обличчя і не сказав, що робити <span class="text-brand">тобі</span>.
+        </p>
+
+        <div class="text-center mt-8">
+            <button onclick="openModal()" class="cta-btn text-base md:text-lg font-bold py-4 px-10 rounded-full uppercase tracking-wide inline-flex items-center gap-2 max-w-sm">
+                Записатися на діагностику <i class="fa-solid fa-angle-right"></i>
+            </button>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ЕКСПЕРТ -->
     <!-- ========================================== -->
     <section class="w-full bg-dark-card border-y border-dark-border py-16">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="w-full md:w-1/2 relative">
+                    <div class="relative rounded-2xl overflow-hidden shadow-[0_0_40px_rgba(225,48,48,0.15)] border border-dark-border">
+                        <img src="page1.jpg" alt="Svitlana Gavryliuk" class="w-full h-auto object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0b0d12] to-transparent opacity-80"></div>
+                        <div class="absolute bottom-6 left-6">
+                            <p class="text-brand text-sm font-bold uppercase tracking-widest mb-1">Хто проводить</p>
+                            <h3 class="text-2xl md:text-3xl font-bold text-white uppercase">Svitlana Gavryliuk</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-1/2">
+                    <h2 class="text-2xl md:text-4xl font-bold text-white mb-6 uppercase leading-snug">
+                        Я бачу не зморшку, <br><span class="text-brand">а причину</span>
+                    </h2>
+
+                    <div class="space-y-4 text-gray-300 text-sm md:text-base leading-relaxed">
+                        <p class="font-medium text-white">
+                            Привіт, я Світлана — спеціалістка з естетичного тейпування та природного омолодження.
+                        </p>
+                        <p>
+                            Я працюю з анатомією: кістки, м'язи, фасції, лімфатична система. Я не вірю в «погану генетику» — я вірю в правильну систему. Обличчя майже завжди говорить те саме, що й тіло: де затиснуто, де застоялось, де ти роками тримаєш напругу.
+                        </p>
+                        <p>
+                            Більшість жінок приходять до мене з одним і тим самим: «Я боюся щось робити, бо не знаю як». Або після невдалих уколів краси, після яких стало гірше. Я розумію цей страх — і саме тому не даю шаблонних порад.
+                        </p>
+                        <p class="text-white font-medium">
+                            Діагностику я проводжу особисто, наживо. Ти бачиш мене, я бачу тебе — і ми разом розбираємо саме твоє обличчя.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ВІДГУКИ -->
+    <!-- ========================================== -->
+    <section class="w-full py-16">
         <div class="max-w-6xl mx-auto px-4">
             <h2 class="text-2xl md:text-4xl font-bold text-white mb-10 text-center uppercase">Що кажуть <span class="text-brand">дівчата</span></h2>
-            
+
             <div class="infinite-slider-container" id="reviews-slider">
-                <button class="slider-nav prev" onclick="slideReviews(-1)">
+                <button class="slider-nav prev" onclick="slideReviews(-1)" aria-label="Попереднє">
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
                 <div class="infinite-slider-track" id="reviews-track">
-                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews1.jpg" class="w-full h-auto rounded-xl object-contain"></div>
-                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews2.jpg" class="w-full h-auto rounded-xl object-contain"></div>
-                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews3.jpg" class="w-full h-auto rounded-xl object-contain"></div>
-                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews4.jpg" class="w-full h-auto rounded-xl object-contain"></div>
-                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews5.jpg" class="w-full h-auto rounded-xl object-contain"></div>
-                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews6.jpg" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews1.jpg" alt="Відгук 1" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews2.jpg" alt="Відгук 2" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews3.jpg" alt="Відгук 3" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews4.jpg" alt="Відгук 4" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews5.jpg" alt="Відгук 5" class="w-full h-auto rounded-xl object-contain"></div>
+                    <div class="slider-item custom-card rounded-2xl overflow-hidden p-2"><img src="reviews6.jpg" alt="Відгук 6" class="w-full h-auto rounded-xl object-contain"></div>
                 </div>
-                <button class="slider-nav next" onclick="slideReviews(1)">
+                <button class="slider-nav next" onclick="slideReviews(1)" aria-label="Наступне">
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>
@@ -508,66 +672,139 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- ГАРАНТІЯ -->
+    <!-- FAQ -->
     <!-- ========================================== -->
-    <section class="w-full max-w-3xl px-4 mx-auto mt-16 mb-24">
-        <div class="bg-dark-card border border-brand/40 rounded-2xl p-6 md:p-8 relative overflow-hidden shadow-[0_0_30px_rgba(225,48,48,0.1)]">
-            <div class="absolute top-0 right-0 p-4 opacity-10"><i class="fa-solid fa-shield-halved text-8xl text-brand"></i></div>
-            <div class="flex items-start gap-4 relative z-10">
-                <div class="text-brand text-4xl shrink-0"><i class="fa-solid fa-certificate"></i></div>
-                <div>
-                    <h3 class="text-xl font-bold text-white mb-2 uppercase">100% Гарантія повернення</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Якщо розбір не принесе користі — <strong class="text-white">я поверну вам усі 590 грн</strong>.</p>
+    <section class="w-full bg-dark-card border-y border-dark-border py-16">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-2xl md:text-4xl font-bold text-white mb-10 text-center uppercase">Часті <span class="text-brand">питання</span></h2>
+
+            <div id="faq">
+                <div class="faq-item open">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span>Що саме таке «жива діагностика»?</span>
+                        <i class="fa-solid fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-a">Це відеозустріч зі мною у Zoom на 45–60 хвилин, віч-на-віч. Не запис, не бот і не текстова відповідь. Ми бачимо одна одну, я дивлюся на твоє обличчя і в реальному часі пояснюю, що з ним відбувається та що робити.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span>Скільки триває і коли відбудеться?</span>
+                        <i class="fa-solid fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-a">45–60 хвилин. Час ми узгоджуємо в Telegram одразу після оплати — підбираємо зручний для тебе день і годину.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span>Що потрібно підготувати?</span>
+                        <i class="fa-solid fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-a">Кілька фото обличчя в різних ракурсах — надішлеш їх заздалегідь, щоб я підготувалась. І список питань, якщо вони в тебе є. Більше нічого.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span>А якщо в мене проблемна або чутлива шкіра?</span>
+                        <i class="fa-solid fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-a">Саме тому діагностика персональна. Я враховую стан шкіри й підбираю м'який варіант — або чесно скажу, якщо якась техніка тобі не підходить.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span>Я вже пробувала масажі й тейпи, результату не було.</span>
+                        <i class="fa-solid fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-a">Найчастіша причина — неправильний напрямок рухів для конкретно твого типу старіння. На діагностиці ми якраз і побачимо, що саме йшло не так.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span>Скільки часу це займатиме щодня потім?</span>
+                        <i class="fa-solid fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-a">План складається під твій реальний ритм. Стандартно — 10–15 хвилин. Годинні ритуали не працюють, бо їх не витримує ніхто довше двох тижнів.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span>А якщо мені не сподобається?</span>
+                        <i class="fa-solid fa-plus faq-icon"></i>
+                    </button>
+                    <div class="faq-a">Поверну всі 790 грн. Без пояснень і без зайвих питань.</div>
                 </div>
             </div>
         </div>
-        <div class="mt-8 text-center">
-             <button onclick="openModal()" class="cta-btn text-xl font-bold py-5 px-12 rounded-xl uppercase tracking-wide shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                Хочу розбір обличчя
+    </section>
+
+    <!-- ========================================== -->
+    <!-- ЦІНА + ГАРАНТІЯ + ФІНАЛЬНИЙ CTA -->
+    <!-- ========================================== -->
+    <section class="w-full max-w-3xl px-4 mx-auto mt-16 mb-28 md:mb-24">
+        <div class="custom-card rounded-2xl p-6 md:p-10 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-white uppercase mb-2">Жива діагностика обличчя</h2>
+            <p class="text-gray-400 text-sm md:text-base mb-6">Zoom · 45–60 хвилин · особисто зі Світланою</p>
+
+            <div class="flex flex-col items-center mb-6">
+                <span class="text-5xl md:text-6xl font-extrabold text-white price-glow leading-none">790 грн</span>
+                <span class="text-gray-500 text-base md:text-lg line-through decoration-red-500/70 decoration-2 mt-2">1790 грн</span>
+            </div>
+
+            <div class="text-left max-w-md mx-auto space-y-3 mb-8">
+                <p class="text-gray-300 text-sm flex items-start gap-3"><i class="fa-solid fa-check text-brand mt-1"></i> Відеозустріч 45–60 хвилин віч-на-віч</p>
+                <p class="text-gray-300 text-sm flex items-start gap-3"><i class="fa-solid fa-check text-brand mt-1"></i> Твій тип старіння і справжні причини змін</p>
+                <p class="text-gray-300 text-sm flex items-start gap-3"><i class="fa-solid fa-check text-brand mt-1"></i> Покроковий план технік під твоє обличчя</p>
+                <p class="text-gray-300 text-sm flex items-start gap-3"><i class="fa-solid fa-check text-brand mt-1"></i> Список того, чого робити не можна</p>
+                <p class="text-gray-300 text-sm flex items-start gap-3"><i class="fa-solid fa-check text-brand mt-1"></i> Відповіді на всі твої питання наживо</p>
+            </div>
+
+            <div class="bg-[#0b0d12]/60 border border-brand/40 rounded-xl p-5 mb-8 flex items-start gap-4 text-left">
+                <div class="text-brand text-2xl shrink-0"><i class="fa-solid fa-certificate"></i></div>
+                <div>
+                    <h3 class="text-base font-bold text-white mb-1 uppercase">100% гарантія повернення</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Якщо діагностика не буде для тебе корисною — <strong class="text-white">я поверну всі 790 грн</strong>.</p>
+                </div>
+            </div>
+
+            <button onclick="openModal()" class="cta-btn text-lg font-bold py-5 px-12 rounded-full uppercase tracking-wide">
+                Записатися на діагностику
             </button>
         </div>
     </section>
 
-    <!-- ПРАВКА: Текст кнопки мобільної плашки -->
-    <button onclick="openModal()" class="md:hidden mobile-fixed-btn text-white text-lg font-bold py-4 rounded-xl uppercase tracking-wide flex justify-center items-center">
-        Хочу розбір обличчя
+    <!-- Мобільна фіксована кнопка -->
+    <button id="mobile-cta" onclick="openModal()" class="md:hidden mobile-fixed-btn text-white text-base font-bold py-4 rounded-xl uppercase tracking-wide hidden justify-center items-center">
+        Записатися · 790 грн
     </button>
 
     <!-- ========================================== -->
-    <!-- MODAL FORM (POPUP) -->
+    <!-- MODAL FORM -->
     <!-- ========================================== -->
-    <div id="order-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center px-4 modal-overlay transition-opacity duration-300">
+    <div id="order-modal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 modal-overlay transition-opacity duration-300">
         <div class="modal-content w-full max-w-md rounded-3xl p-6 relative fade-in-up">
-            
-            <!-- Close Button -->
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
+
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors" aria-label="Закрити">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
 
-            <h2 class="text-2xl font-bold text-white mb-2 text-center uppercase">Забронювати місце</h2>
-            <p class="text-gray-400 mb-6 text-center text-xs">Введіть дані для зв'язку та отримання розбору.</p>
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-1 text-center uppercase">Жива діагностика обличчя</h2>
+            <p class="text-gray-400 mb-1 text-center text-xs">Zoom · 45–60 хвилин · особисто зі Світланою</p>
+            <p class="text-center text-xs text-brand font-bold mb-5">790 грн замість 1790 грн · гарантія повернення 100%</p>
 
             <form id="order-form" onsubmit="handleOrderSubmit(event)" class="space-y-4">
-                <!-- ІМ'Я -->
                 <div>
-                    <label class="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Ваше Ім'я</label>
+                    <label class="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Ваше ім'я</label>
                     <input type="text" id="user_name" name="name" placeholder="Олена" class="custom-input rounded-xl py-3 pl-4 pr-4 focus:outline-none placeholder-gray-600">
                     <p id="error-name" class="error-message-text">Ім'я не може містити цифри</p>
                 </div>
 
-                <!-- TELEGRAM -->
-                <div>
-                    <label class="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Ваш Telegram</label>
-                    <input type="text" id="user_telegram" name="telegram" placeholder="@username" class="custom-input rounded-xl py-3 pl-4 pr-4 focus:outline-none placeholder-gray-600">
-                    <p id="error-telegram" class="error-message-text">Введіть нік Telegram</p>
-                </div>
-
-                <!-- ТЕЛЕФОН -->
                 <div>
                     <label class="block text-gray-500 text-xs font-bold uppercase tracking-wider mb-2 ml-1">Телефон</label>
                     <input type="tel" id="phone" name="phone" class="custom-input rounded-xl py-3 focus:outline-none placeholder-gray-600">
                     <input type="hidden" name="full_phone" id="full_phone">
                     <input type="hidden" name="country_code" id="country_code">
+                    <input type="hidden" name="telegram" id="user_telegram" value="">
                     <p id="error-phone" class="error-message-text">Невірний формат номеру</p>
                 </div>
 
@@ -575,7 +812,7 @@
                     <span class="text-gray-400 text-sm">До сплати:</span>
                     <div class="flex items-end gap-2">
                         <span class="text-gray-600 line-through text-xs decoration-red-500/50">1790 грн</span>
-                        <span class="text-xl font-bold text-white">590 грн</span>
+                        <span class="text-xl font-bold text-white">790 грн</span>
                     </div>
                 </div>
 
@@ -586,6 +823,10 @@
                 <button type="submit" class="cta-btn text-lg font-bold py-4 rounded-xl uppercase tracking-wide shadow-lg w-full mt-2">
                     Перейти до оплати
                 </button>
+
+                <p class="text-center text-gray-500 text-[11px] leading-relaxed">
+                    Оплата захищена. Одразу після оплати ти отримаєш посилання в Telegram, де ми узгодимо час зустрічі.
+                </p>
             </form>
         </div>
     </div>
@@ -594,11 +835,11 @@
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/intlTelInput.min.js"></script>
 
     <script>
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzs5mmTFEAfsP64PRv1cgwPa82ZFYYd-3SoYPuyWjIg5oDr2tBrApaGpLLmJDUaLj2Bjw/exec'; 
-        const AMOUNT = '590';
-        const RETURN_URL = 'https://svetlanatapediagnostik590.vercel.app/thanks.html';
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxZr5XOr3ZcamU2m-1bAmwQ6g4kDJXYHFPKrzQoFqzjYSBt4n8EOMydJeyuObzLEB0/exec';
+        const AMOUNT = '790';
+        const RETURN_URL = 'https://svetlanatapediagnostik.vercel.app/thanks.html';
 
-        // Функція для отримання UTM параметрів з URL
+        // ===== UTM =====
         function getUTMParams() {
             const params = new URLSearchParams(window.location.search);
             return {
@@ -608,98 +849,118 @@
                 traff_eu: params.get('traff_eu') || ''
             };
         }
-        
-        // Зберігаємо UTM при завантаженні сторінки
         const utmParams = getUTMParams();
 
-        function openModal() { 
-            document.getElementById('order-modal').classList.remove('hidden'); 
+        // ===== MODAL =====
+        function openModal() {
+            const m = document.getElementById('order-modal');
+            m.classList.remove('hidden');
+            m.classList.add('flex');
             document.body.style.overflow = 'hidden';
-            // Meta Pixel: трекаємо відкриття форми
-            if (typeof fbq !== 'undefined') {
-                fbq('track', 'InitiateCheckout');
-            }
+            if (typeof fbq !== 'undefined') { fbq('track', 'InitiateCheckout'); }
         }
-        function closeModal() { document.getElementById('order-modal').classList.add('hidden'); document.body.style.overflow = 'auto'; }
+        function closeModal() {
+            const m = document.getElementById('order-modal');
+            m.classList.add('hidden');
+            m.classList.remove('flex');
+            document.body.style.overflow = 'auto';
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-        // ========================================
-        // БЕЗКІНЕЧНИЙ СЛАЙДЕР
-        // ========================================
-        
-        // Слайдер "Докази"
+        // ===== FAQ =====
+        function toggleFaq(btn) {
+            btn.parentElement.classList.toggle('open');
+        }
+
+        // ===== ТАЙМЕР: 24 години, зберігається між перезавантаженнями =====
+        const DEADLINE_KEY = 'diag_deadline_v1';
+        const DEADLINE_HOURS = 24;
+
+        function getDeadline() {
+            let stored = localStorage.getItem(DEADLINE_KEY);
+            let deadline = stored ? parseInt(stored, 10) : NaN;
+            if (!deadline || isNaN(deadline) || deadline <= Date.now()) {
+                deadline = Date.now() + DEADLINE_HOURS * 60 * 60 * 1000;
+                localStorage.setItem(DEADLINE_KEY, String(deadline));
+            }
+            return deadline;
+        }
+
+        function startCountdown(display) {
+            const deadline = getDeadline();
+            function tick() {
+                let diff = Math.max(0, deadline - Date.now());
+                const totalSec = Math.floor(diff / 1000);
+                const h = String(Math.floor(totalSec / 3600)).padStart(2, '0');
+                const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, '0');
+                const s = String(totalSec % 60).padStart(2, '0');
+                display.textContent = h + ':' + m + ':' + s;
+            }
+            tick();
+            setInterval(tick, 1000);
+        }
+
+        // ===== МОБІЛЬНА КНОПКА: показуємо після першого екрану =====
+        function initMobileCta() {
+            const btn = document.getElementById('mobile-cta');
+            if (!btn) return;
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > window.innerHeight * 0.7) {
+                    btn.classList.remove('hidden');
+                    btn.classList.add('flex');
+                } else {
+                    btn.classList.add('hidden');
+                    btn.classList.remove('flex');
+                }
+            }, { passive: true });
+        }
+
+        // ===== БЕЗКІНЕЧНИЙ СЛАЙДЕР =====
         let proofsIndex = 0;
         const proofsTrack = document.getElementById('proofs-track');
-        let proofsSlides;
-        let proofsSlideWidth;
-        let proofsTotalSlides;
-        
-        // Слайдер "Відгуки"
+        let proofsSlideWidth, proofsTotalSlides;
+
         let reviewsIndex = 0;
         const reviewsTrack = document.getElementById('reviews-track');
-        let reviewsSlides;
-        let reviewsSlideWidth;
-        let reviewsTotalSlides;
-        
+        let reviewsSlideWidth, reviewsTotalSlides;
+
         function initSliders() {
-            // Ініціалізація слайдера "Докази"
-            proofsSlides = proofsTrack.querySelectorAll('.slider-item');
+            const proofsSlides = proofsTrack.querySelectorAll('.slider-item');
             proofsTotalSlides = proofsSlides.length;
-            
-            // Клонуємо слайди для безкінечності
-            proofsSlides.forEach(slide => {
-                const clone = slide.cloneNode(true);
-                proofsTrack.appendChild(clone);
-            });
-            proofsSlides.forEach(slide => {
-                const clone = slide.cloneNode(true);
-                proofsTrack.insertBefore(clone, proofsTrack.firstChild);
-            });
-            
-            // Ініціалізація слайдера "Відгуки"
-            reviewsSlides = reviewsTrack.querySelectorAll('.slider-item');
+            proofsSlides.forEach(slide => proofsTrack.appendChild(slide.cloneNode(true)));
+            proofsSlides.forEach(slide => proofsTrack.insertBefore(slide.cloneNode(true), proofsTrack.firstChild));
+
+            const reviewsSlides = reviewsTrack.querySelectorAll('.slider-item');
             reviewsTotalSlides = reviewsSlides.length;
-            
-            // Клонуємо слайди для безкінечності
-            reviewsSlides.forEach(slide => {
-                const clone = slide.cloneNode(true);
-                reviewsTrack.appendChild(clone);
-            });
-            reviewsSlides.forEach(slide => {
-                const clone = slide.cloneNode(true);
-                reviewsTrack.insertBefore(clone, reviewsTrack.firstChild);
-            });
-            
+            reviewsSlides.forEach(slide => reviewsTrack.appendChild(slide.cloneNode(true)));
+            reviewsSlides.forEach(slide => reviewsTrack.insertBefore(slide.cloneNode(true), reviewsTrack.firstChild));
+
             updateSliderDimensions();
             window.addEventListener('resize', updateSliderDimensions);
         }
-        
+
         function updateSliderDimensions() {
-            // Докази
-            const proofsFirstSlide = proofsTrack.querySelector('.slider-item');
-            if (proofsFirstSlide) {
-                proofsSlideWidth = proofsFirstSlide.offsetWidth + 16; // 16 = gap
+            const p = proofsTrack.querySelector('.slider-item');
+            if (p) {
+                proofsSlideWidth = p.offsetWidth + 16;
                 proofsIndex = proofsTotalSlides;
                 proofsTrack.classList.add('no-transition');
                 proofsTrack.style.transform = `translateX(-${proofsIndex * proofsSlideWidth}px)`;
                 setTimeout(() => proofsTrack.classList.remove('no-transition'), 50);
             }
-            
-            // Відгуки
-            const reviewsFirstSlide = reviewsTrack.querySelector('.slider-item');
-            if (reviewsFirstSlide) {
-                reviewsSlideWidth = reviewsFirstSlide.offsetWidth + 16;
+            const r = reviewsTrack.querySelector('.slider-item');
+            if (r) {
+                reviewsSlideWidth = r.offsetWidth + 16;
                 reviewsIndex = reviewsTotalSlides;
                 reviewsTrack.classList.add('no-transition');
                 reviewsTrack.style.transform = `translateX(-${reviewsIndex * reviewsSlideWidth}px)`;
                 setTimeout(() => reviewsTrack.classList.remove('no-transition'), 50);
             }
         }
-        
+
         function slideProofs(direction) {
             proofsIndex += direction;
             proofsTrack.style.transform = `translateX(-${proofsIndex * proofsSlideWidth}px)`;
-            
-            // Перевіряємо чи потрібно "перестрибнути"
             setTimeout(() => {
                 if (proofsIndex >= proofsTotalSlides * 2) {
                     proofsTrack.classList.add('no-transition');
@@ -714,11 +975,10 @@
                 }
             }, 400);
         }
-        
+
         function slideReviews(direction) {
             reviewsIndex += direction;
             reviewsTrack.style.transform = `translateX(-${reviewsIndex * reviewsSlideWidth}px)`;
-            
             setTimeout(() => {
                 if (reviewsIndex >= reviewsTotalSlides * 2) {
                     reviewsTrack.classList.add('no-transition');
@@ -733,47 +993,27 @@
                 }
             }, 400);
         }
-        
-        // Підтримка свайпів на мобільних
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        document.getElementById('proofs-slider').addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-        
+
+        // Свайпи
+        let touchStartX = 0, touchEndX = 0;
+        document.getElementById('proofs-slider').addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
         document.getElementById('proofs-slider').addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
             if (touchStartX - touchEndX > 50) slideProofs(1);
             if (touchEndX - touchStartX > 50) slideProofs(-1);
         }, {passive: true});
-        
-        document.getElementById('reviews-slider').addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-        
+        document.getElementById('reviews-slider').addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
         document.getElementById('reviews-slider').addEventListener('touchend', e => {
             touchEndX = e.changedTouches[0].screenX;
             if (touchStartX - touchEndX > 50) slideReviews(1);
             if (touchEndX - touchStartX > 50) slideReviews(-1);
         }, {passive: true});
 
-        // ПРАВКА: Таймер на 10 хвилин
-        function startTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-                display.textContent = minutes + ":" + seconds;
-                if (--timer < 0) timer = 0;
-            }, 1000);
-        }
-
+        // ===== INIT =====
         document.addEventListener('DOMContentLoaded', () => {
-            startTimer(10 * 60, document.querySelector('#countdown'));
+            startCountdown(document.querySelector('#countdown'));
             initSliders();
+            initMobileCta();
 
             const input = document.querySelector("#phone");
             const iti = window.intlTelInput(input, {
@@ -784,72 +1024,59 @@
                     fetch("https://ipapi.co/json").then(res => res.json()).then(data => callback(data.country_code)).catch(() => callback("ua"));
                 },
                 utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
-                separateDialCode: true, 
+                separateDialCode: true,
             });
 
             window.handleOrderSubmit = function(e) {
                 e.preventDefault();
                 const nameInput = document.getElementById('user_name');
-                const telegramInput = document.getElementById('user_telegram');
                 const phoneInput = document.getElementById('phone');
                 const btn = e.target.querySelector('button[type="submit"]');
 
-                if (!iti.isValidNumber()) {
-                    phoneInput.classList.add('input-error');
+                // Валідація імені
+                if (!nameInput.value.trim() || /\d/.test(nameInput.value)) {
+                    nameInput.classList.add('input-error');
+                    document.getElementById('error-name').style.display = 'block';
                     return;
                 }
+                nameInput.classList.remove('input-error');
+                document.getElementById('error-name').style.display = 'none';
+
+                if (!iti.isValidNumber()) {
+                    phoneInput.classList.add('input-error');
+                    document.getElementById('error-phone').style.display = 'block';
+                    return;
+                }
+                phoneInput.classList.remove('input-error');
+                document.getElementById('error-phone').style.display = 'none';
 
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Обробка...';
 
                 document.getElementById('full_phone').value = iti.getNumber();
-                
-                // Зберігаємо телефон для сторінки thanks.html
                 localStorage.setItem('user_phone', iti.getNumber());
-                
+
                 const formData = new FormData(document.getElementById('order-form'));
-                
-                // Додаємо UTM параметри
                 formData.append('campaign_name', utmParams.campaign_name);
                 formData.append('adset_name', utmParams.adset_name);
                 formData.append('ad_name', utmParams.ad_name);
                 formData.append('traff_eu', utmParams.traff_eu);
-                
-                // Додаємо суму і return_url для API
                 formData.append('amount', AMOUNT);
                 formData.append('return_url', RETURN_URL);
-                
-                // Meta Pixel: трекаємо відправку форми
-                if (typeof fbq !== 'undefined') {
-                    fbq('track', 'Lead');
-                }
-                
-                // Відправляємо в скрипт і отримуємо дані для оплати
-                console.log('Відправляю запит на:', GOOGLE_SCRIPT_URL);
-                
+
+                if (typeof fbq !== 'undefined') { fbq('track', 'Lead'); }
+
                 fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: formData })
-                .then(response => {
-                    console.log('Отримано відповідь:', response);
-                    console.log('Status:', response.status);
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log('Дані від скрипта:', data);
                     if (data.paymentData) {
-                        console.log('paymentData знайдено, створюю форму...');
-                        
-                        // Зберігаємо orderId для thanks.html
-                        localStorage.setItem('pending_order_id', data.orderId);
-                        
-                        // Створюємо приховану форму для POST на WayForPay
                         const form = document.createElement('form');
                         form.method = 'POST';
                         form.action = 'https://secure.wayforpay.com/pay';
                         form.target = '_top';
                         form.style.display = 'none';
-                        
+
                         const pd = data.paymentData;
-                        console.log('pd:', pd);
                         const fields = {
                             'merchantAccount': pd.merchantAccount,
                             'merchantDomainName': pd.merchantDomainName,
@@ -867,21 +1094,17 @@
                             'clientFirstName': pd.clientFirstName,
                             'clientPhone': pd.clientPhone
                         };
-                        
-                        console.log('fields:', fields);
-                        
+
                         for (const [key, value] of Object.entries(fields)) {
-                            const input = document.createElement('input');
-                            input.type = 'hidden';
-                            input.name = key;
-                            input.value = value;
-                            form.appendChild(input);
+                            const i = document.createElement('input');
+                            i.type = 'hidden';
+                            i.name = key;
+                            i.value = value;
+                            form.appendChild(i);
                         }
-                        
-                        console.log('Форма створена, відправляю...');
+
                         document.body.appendChild(form);
                         form.submit();
-                        console.log('Форма відправлена');
                     } else {
                         alert('Помилка створення платежу: ' + JSON.stringify(data));
                         btn.disabled = false;
@@ -890,8 +1113,6 @@
                 })
                 .catch(error => {
                     console.error('ПОМИЛКА fetch:', error);
-                    console.error('Тип помилки:', error.name);
-                    console.error('Повідомлення:', error.message);
                     alert('Помилка з\'єднання: ' + error.message);
                     btn.disabled = false;
                     btn.innerHTML = 'Перейти до оплати';
