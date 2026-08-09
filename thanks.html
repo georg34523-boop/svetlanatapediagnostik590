@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Дякуємо за оплату! | Svitlana Tape</title>
-    
+
     <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
@@ -17,19 +17,18 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1548773689373078');
     fbq('track', 'PageView');
-    fbq('track', 'Purchase', {currency: 'UAH', value: 590});
+    // ВАЖЛИВО: Purchase більше НЕ спрацьовує тут автоматично.
+    // Він відправляється у скрипті нижче — тільки після підтвердження оплати
+    // і з реальною сумою. Див. функцію firePurchase().
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1548773689373078&ev=PageView&noscript=1"/></noscript>
     <!-- End Meta Pixel Code -->
-    
-    <!-- Tailwind CSS -->
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <style>
         body {
             font-family: 'Montserrat', sans-serif;
@@ -37,221 +36,250 @@
             color: #ffffff;
             min-height: 100vh;
         }
-        
+
         .success-card {
             background: linear-gradient(145deg, #13161c 0%, #0f1116 100%);
             border: 1px solid #2d323e;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
-        
+
         .success-icon {
             background: linear-gradient(135deg, #10b981 0%, #059669 100%);
             animation: pulse-green 2s infinite;
         }
-        
         @keyframes pulse-green {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-            50% { box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+            0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(16,185,129,0); }
         }
-        
+
         .telegram-btn {
             background: linear-gradient(135deg, #0088cc 0%, #0077b5 100%);
-            transition: all 0.3s ease;
+            transition: all .3s ease;
             animation: pulse-blue 2s infinite;
         }
-        
-        .telegram-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 136, 204, 0.4);
-        }
-        
+        .telegram-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,136,204,0.4); }
         @keyframes pulse-blue {
-            0%, 100% { box-shadow: 0 10px 30px rgba(0, 136, 204, 0.3); }
-            50% { box-shadow: 0 10px 40px rgba(0, 136, 204, 0.5); }
+            0%,100% { box-shadow: 0 10px 30px rgba(0,136,204,0.3); }
+            50% { box-shadow: 0 10px 40px rgba(0,136,204,0.5); }
         }
-        
-        .step-number {
-            background: linear-gradient(135deg, #E13030 0%, #b91c1c 100%);
+
+        .ghost-btn {
+            background: transparent; border: 1.5px solid #4a5162; transition: all .3s ease;
         }
-        
+        .ghost-btn:hover { border-color: #fff; background: rgba(255,255,255,.05); }
+
+        .step-number { background: linear-gradient(135deg, #E13030 0%, #b91c1c 100%); }
+
         .loading-spinner {
-            border: 3px solid #2d323e;
-            border-top: 3px solid #0088cc;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            border: 3px solid #2d323e; border-top: 3px solid #0088cc;
+            border-radius: 50%; width: 40px; height: 40px;
             animation: spin 1s linear infinite;
         }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
+
+        .order-box {
+            background: #0b0d12; border: 1px dashed #2d323e; border-radius: 12px;
+            font-family: monospace; font-size: 13px; color: #9ca3af;
+            padding: 10px 14px; word-break: break-all;
         }
     </style>
 </head>
 <body class="flex items-center justify-center p-4">
-    
+
     <div class="success-card rounded-3xl p-8 md:p-12 max-w-lg w-full text-center">
-        
-        <!-- Success Icon -->
+
         <div class="success-icon w-20 h-20 md:w-24 md:h-24 rounded-full flex items-center justify-center mx-auto mb-6">
             <i class="fa-solid fa-check text-white text-3xl md:text-4xl"></i>
         </div>
-        
-        <!-- Title -->
-        <h1 class="text-2xl md:text-3xl font-bold mb-4">
-            Оплата пройшла успішно! 🎉
-        </h1>
-        
+
+        <h1 class="text-2xl md:text-3xl font-bold mb-4">Оплата пройшла успішно!</h1>
+
         <p class="text-gray-400 mb-8">
             Дякуємо за довіру! Тепер перейдіть у Telegram-бот, щоб розпочати діагностику.
         </p>
-        
-        <!-- Loading state -->
+
+        <!-- Стан очікування -->
         <div id="loading-state" class="mb-8">
             <div class="loading-spinner mx-auto mb-4"></div>
-            <p class="text-gray-400 text-sm">Генеруємо ваше посилання...</p>
+            <p class="text-gray-400 text-sm">Генеруємо ваше персональне посилання...</p>
+            <p id="loading-hint" class="text-gray-600 text-xs mt-2">Це може зайняти до хвилини. Не закривайте сторінку.</p>
         </div>
-        
-        <!-- Bot Link (hidden initially) -->
+
+        <!-- Успіх: персональне посилання -->
         <div id="bot-link-container" class="hidden mb-8">
-            <a id="bot-link" href="#" target="_blank" 
+            <a id="bot-link" href="#" target="_blank"
                class="telegram-btn inline-flex items-center justify-center gap-3 text-white text-lg font-bold py-4 px-8 rounded-full w-full">
                 <i class="fa-brands fa-telegram text-2xl"></i>
                 Перейти в Telegram-бот
             </a>
         </div>
-        
-        <!-- Fallback link -->
+
+        <!-- Fallback: токен не знайдено -->
         <div id="fallback-container" class="hidden mb-8">
-            <p class="text-yellow-400 mb-4">
-                <i class="fa-solid fa-exclamation-triangle mr-2"></i>
-                Якщо посилання не з'явилося, напишіть нам:
-            </p>
-            <a href="https://t.me/testlid12bot" target="_blank" 
-               class="telegram-btn inline-flex items-center justify-center gap-3 text-white text-lg font-bold py-4 px-8 rounded-full w-full">
+            <div class="bg-yellow-500/10 border border-yellow-500/40 rounded-2xl p-5 mb-5 text-left">
+                <p class="text-yellow-400 font-bold mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-circle-exclamation"></i> Оплата пройшла, доступ ще формується
+                </p>
+                <p class="text-gray-300 text-sm leading-relaxed mb-3">
+                    Ваші гроші на місці — з оплатою все гаразд. Просто натисніть кнопку нижче і напишіть боту «Старт»,
+                    ми активуємо доступ вручну протягом кількох хвилин.
+                </p>
+                <p class="text-gray-400 text-xs mb-1">Номер вашого замовлення (надішліть його в чат):</p>
+                <div class="order-box" id="order-box">—</div>
+            </div>
+
+            <a id="fallback-link" href="#" target="_blank"
+               class="telegram-btn inline-flex items-center justify-center gap-3 text-white text-lg font-bold py-4 px-8 rounded-full w-full mb-3">
                 <i class="fa-brands fa-telegram text-2xl"></i>
-                Написати в бот
+                Написати в Telegram-бот
             </a>
+
+            <button onclick="retry()" class="ghost-btn text-white text-sm font-bold py-3 px-6 rounded-full w-full">
+                <i class="fa-solid fa-rotate-right mr-2"></i> Спробувати ще раз
+            </button>
         </div>
-        
-        <!-- Steps -->
+
+        <!-- Кроки -->
         <div class="text-left space-y-4 mb-8">
             <h3 class="text-lg font-bold text-center mb-4">Що далі?</h3>
-            
+
             <div class="flex items-start gap-4">
                 <div class="step-number w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">1</div>
-                <div>
-                    <p class="text-gray-300">Натисніть кнопку вище і перейдіть у Telegram-бот</p>
-                </div>
+                <p class="text-gray-300">Натисніть кнопку вище і перейдіть у Telegram-бот</p>
             </div>
-            
             <div class="flex items-start gap-4">
                 <div class="step-number w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">2</div>
-                <div>
-                    <p class="text-gray-300">Натисніть "Старт" у боті — ваш доступ активується автоматично</p>
-                </div>
+                <p class="text-gray-300">Натисніть «Старт» у боті — ваш доступ активується автоматично</p>
             </div>
-            
             <div class="flex items-start gap-4">
                 <div class="step-number w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0">3</div>
-                <div>
-                    <p class="text-gray-300">Надішліть фото для діагностики та отримайте персональні рекомендації!</p>
-                </div>
+                <p class="text-gray-300">Далі бот підкаже, які фото надіслати та як обрати час</p>
             </div>
         </div>
-        
-        <!-- Support -->
+
         <p class="text-gray-500 text-sm">
-            Виникли питання? Напишіть нам у 
-            <a href="https://t.me/testlid12bot" class="text-blue-400 hover:underline">Telegram</a>
+            Виникли питання? Напишіть нам у
+            <a id="support-link" href="#" target="_blank" class="text-blue-400 hover:underline">Telegram</a>
         </p>
-        
+
     </div>
-    
+
     <script>
-        // Отримуємо orderReference з URL або localStorage
-        const urlParams = new URLSearchParams(window.location.search);
-        let orderReference = urlParams.get('orderReference');
-        
-        // Якщо немає в URL - беремо з localStorage
-        if (!orderReference) {
-            orderReference = localStorage.getItem('pending_order_id');
-        }
-        
-        // Налаштування
+        // ================== НАЛАШТУВАННЯ ==================
         const SUPABASE_URL = 'https://jlwjocmcmrplvulqxnik.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impsd2pvY21jbXJwbHZ1bHF4bmlrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAyODY5NjgsImV4cCI6MjA4NTg2Mjk2OH0.5jbJRQVUJ2Hcle3bhq3LOtAtRpaHAd5_Slh44_h9apM';
+
+        // Робочий бот. У БД: svitlana_gavriluk_bot / «Діагностика Світлани» / is_active = true
         const BOT_USERNAME = 'svitlana_gavriluk_bot';
-        
-        async function getTokenByOrderId(orderId) {
+
+        // Куди вести людину, якщо токен не згенерувався.
+        // TODO: замінити на акаунт живого менеджера (напр. 'svitlana_manager'),
+        // щоб людина одразу писала людині, а не в бота.
+        const SUPPORT_USERNAME = 'svitlana_gavriluk_bot';
+
+        // Скільки чекати токен: 40 спроб × 2 сек = до 80 секунд
+        const MAX_ATTEMPTS = 40;
+        const ATTEMPT_DELAY = 2000;
+        // ==================================================
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // orderReference: спочатку з URL (WayForPay returnMethod=GET), потім з localStorage (ставить лендинг)
+        let orderReference = urlParams.get('orderReference') || localStorage.getItem('pending_order_id') || '';
+
+        // Сума: з URL, потім з localStorage (ставить лендинг), потім null — щоб не слати вигадану
+        let paidAmount = parseFloat(urlParams.get('amount') || localStorage.getItem('pending_amount') || '') || null;
+
+        // Статус транзакції від WayForPay (returnMethod=GET). 'Approved' = оплата пройшла.
+        const wfpStatus = urlParams.get('transactionStatus') || '';
+
+        let purchaseFired = false;
+
+        // Purchase відправляємо ЛИШЕ якщо оплата реально підтверджена:
+        //  - або знайдено токен у базі (його створює callback уже після підтвердження),
+        //  - або WayForPay прямо повернув transactionStatus=Approved.
+        // Інакше — мовчимо. Краще недорахувати подію, ніж зарахувати неоплачений візит.
+        function firePurchase(amountFromDb, confirmed) {
+            if (purchaseFired || !confirmed) return;
+            const value = amountFromDb || paidAmount;
+            if (typeof fbq === 'undefined' || !value) return;
+            fbq('track', 'Purchase',
+                { currency: 'UAH', value: parseFloat(value), content_name: 'Діагностика обличчя' },
+                // eventID = номер замовлення. Потрібен, щоб браузерна і серверна (CAPI)
+                // подія не порахувалися двічі.
+                orderReference ? { eventID: orderReference } : undefined
+            );
+            purchaseFired = true;
+        }
+
+        async function getTokenRow(orderId) {
             try {
-                const response = await fetch(
-                    `${SUPABASE_URL}/rest/v1/payment_tokens?order_id=eq.${orderId}&select=token,status`,
-                    {
-                        headers: {
-                            'apikey': SUPABASE_KEY,
-                            'Authorization': `Bearer ${SUPABASE_KEY}`
-                        }
-                    }
+                const res = await fetch(
+                    `${SUPABASE_URL}/rest/v1/payment_tokens?order_id=eq.${encodeURIComponent(orderId)}&select=token,status,amount`,
+                    { headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` } }
                 );
-                
-                const data = await response.json();
-                console.log('Token data:', data);
-                
-                if (data && data.length > 0 && data[0].status === 'unused') {
-                    return data[0].token;
-                }
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) return data[0];
                 return null;
-            } catch (error) {
-                console.error('Error fetching token:', error);
+            } catch (e) {
+                console.error('Error fetching token:', e);
                 return null;
             }
         }
-        
+
+        function showFallback() {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('bot-link-container').classList.add('hidden');
+            document.getElementById('fallback-container').classList.remove('hidden');
+            document.getElementById('order-box').textContent = orderReference || 'номер не визначено';
+            // Токена немає — покладаємось лише на прямий статус від WayForPay.
+            firePurchase(null, wfpStatus === 'Approved');
+        }
+
+        function showSuccess(row) {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('fallback-container').classList.add('hidden');
+            document.getElementById('bot-link-container').classList.remove('hidden');
+            document.getElementById('bot-link').href =
+                `https://t.me/${BOT_USERNAME}?start=${encodeURIComponent(row.token)}`;
+            localStorage.removeItem('pending_order_id');
+            localStorage.removeItem('pending_amount');
+            firePurchase(row.amount, true); // токен існує => оплата підтверджена
+        }
+
         async function init() {
-            const loadingState = document.getElementById('loading-state');
-            const botLinkContainer = document.getElementById('bot-link-container');
-            const fallbackContainer = document.getElementById('fallback-container');
-            const botLink = document.getElementById('bot-link');
-            
-            console.log('OrderReference:', orderReference);
-            
-            if (orderReference) {
-                // Чекаємо трохи, поки webhook створить токен
-                let token = null;
-                let attempts = 0;
-                const maxAttempts = 15;
-                
-                while (!token && attempts < maxAttempts) {
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    token = await getTokenByOrderId(orderReference);
-                    attempts++;
-                    console.log('Attempt', attempts, 'token:', token);
-                }
-                
-                loadingState.classList.add('hidden');
-                
-                if (token) {
-                    // Очищаємо localStorage
-                    localStorage.removeItem('pending_order_id');
-                    
-                    const link = `https://t.me/${BOT_USERNAME}?start=${token}`;
-                    botLink.href = link;
-                    botLinkContainer.classList.remove('hidden');
-                } else {
-                    fallbackContainer.classList.remove('hidden');
-                }
-            } else {
-                // Немає orderReference - показуємо fallback
-                loadingState.classList.add('hidden');
-                fallbackContainer.classList.remove('hidden');
+            const loading = document.getElementById('loading-state');
+            const hint = document.getElementById('loading-hint');
+
+            document.getElementById('fallback-link').href = `https://t.me/${SUPPORT_USERNAME}`;
+            document.getElementById('support-link').href = `https://t.me/${SUPPORT_USERNAME}`;
+
+            loading.classList.remove('hidden');
+            document.getElementById('bot-link-container').classList.add('hidden');
+            document.getElementById('fallback-container').classList.add('hidden');
+
+            if (!orderReference) { showFallback(); return; }
+
+            let row = null, attempts = 0;
+            while (!row && attempts < MAX_ATTEMPTS) {
+                await new Promise(r => setTimeout(r, ATTEMPT_DELAY));
+                row = await getTokenRow(orderReference);
+                attempts++;
+                if (attempts === 10) hint.textContent = 'Ще трохи, платіж підтверджується...';
+                if (attempts === 25) hint.textContent = 'Майже готово, зачекайте ще пів хвилини...';
             }
+
+            if (row && row.token) showSuccess(row);
+            else showFallback();
         }
-        
-        // Запускаємо
+
+        function retry() {
+            purchaseFired = true; // щоб повторний прогін не задублював подію
+            init();
+        }
+
         init();
     </script>
-    
+
 </body>
 </html>
